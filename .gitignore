@@ -1,0 +1,44 @@
+# macOS
+.DS_Store
+
+# C/C++ build
+build/
+build-*/
+build.*/
+build*/
+*.o
+*.a
+*.dSYM/
+
+# Desktop prototype
+desktop-prototype/build/
+
+# ESP-IDF
+sdkconfig.old
+sdkconfig.old.*
+sdkconfig 2.old
+**/sdkconfig.old
+**/managed_components/
+**/.tools/
+**/dependencies.lock
+**/build.stale-downloads*/
+
+# Python (LCD simulator)
+**/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE / editor
+.vscode/.ropeproject
+*.code-workspace.bak
+.idea/
+
+# Large local-only assets
+物料文档/
+
+# Secrets — never commit
+.env
+*.pem
+*.key
+credentials.json

@@ -1,0 +1,16 @@
+{
+  "idf.extensionActivationMode": "never",
+  "idf.cmakeCompilerArgs": "",
+  "cmake.generator": "Ninja",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
+  "cmake.configureOnOpen": false,
+  "cmake.exportCompileCommandsFile": true,
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/Users/ziyiyang/Desktop/AirMix/build"
+  ],
+  "clangd.path": "/Users/ziyiyang/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
+  "idf.currentSetup": "/Users/ziyiyang/espressif/v6.0.1/esp-idf"
+}

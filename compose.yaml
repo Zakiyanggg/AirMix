@@ -1,0 +1,6 @@
+services:
+  airmix:
+    image: airmix
+    build:
+      context: .
+      dockerfile: ./Dockerfile

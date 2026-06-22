@@ -1,0 +1,78 @@
+{
+  "folders": [
+    {
+      "name": "① LCD 屏幕模拟",
+      "path": "ESP32-C6-LCD-1.47-Demo/ESP-IDF/ESP32-C6-LCD-1.47-Test/tools/lcd_sim",
+      "settings": {
+        "idf.extensionActivationMode": "never",
+        "files.exclude": {
+          "**/.venv": true
+        }
+      }
+    },
+    {
+      "name": "② ESP32 蓝牙音乐 (刷 esp32)",
+      "path": "projects/esp32-bt-audio",
+      "settings": {
+        "idf.extensionActivationMode": "always",
+        "idf.adapterTargetName": "esp32",
+        "idf.buildPath": "${workspaceFolder}/build-esp32",
+        "idf.currentSetup": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+        "idf.espIdfPath": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+        "idf.toolsPath": "/Users/ziyiyang/.espressif",
+        "idf.pythonInstallPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "idf.customExtraVars": {
+          "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env"
+        },
+        "idf.openOcdConfigs": [
+          "interface/ftdi/esp32_devkitj_v1.cfg",
+          "target/esp32.cfg"
+        ],
+        "clangd.path": "/Users/ziyiyang/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
+        "clangd.arguments": [
+          "--background-index",
+          "--query-driver=**",
+          "--compile-commands-dir=${workspaceFolder}/build-esp32"
+        ]
+      }
+    },
+    {
+      "name": "③ ESP32-C6 屏幕显示 (刷 esp32c6)",
+      "path": "projects/esp32c6-display",
+      "settings": {
+        "idf.extensionActivationMode": "always",
+        "idf.adapterTargetName": "esp32c6",
+        "idf.buildPath": "${workspaceFolder}/build-esp32c6",
+        "idf.currentSetup": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+        "idf.espIdfPath": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+        "idf.toolsPath": "/Users/ziyiyang/.espressif",
+        "idf.pythonInstallPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+        "idf.customExtraVars": {
+          "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env"
+        },
+        "idf.openOcdConfigs": [
+          "board/esp32c6-lpcore-builtin.cfg"
+        ],
+        "clangd.path": "/Users/ziyiyang/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
+        "clangd.arguments": [
+          "--background-index",
+          "--query-driver=**",
+          "--compile-commands-dir=${workspaceFolder}/build-esp32c6"
+        ]
+      }
+    },
+    {
+      "name": "④ 算法训练 (Melody / Loop)",
+      "path": "algorithm-training",
+      "settings": {
+        "idf.extensionActivationMode": "never"
+      }
+    }
+  ],
+  "settings": {
+    "idf.pythonInstallPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+    "idf.customExtraVars": {
+      "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env"
+    }
+  }
+}
