@@ -38,6 +38,16 @@ __pycache__/
 
 # Large local-only assets
 物料文档/
+hardware/ESP32-P4-WIFI6/examples/
+hardware/ESP32-P4-WIFI6/pdfs/
+
+# Factory / firmware blobs
+*.bin
+merged-factory.bin
+
+# Accidental sdkconfig copies
+**/sdkconfig 2
+**/sdkconfig 2.*
 
 # Secrets — never commit
 .env

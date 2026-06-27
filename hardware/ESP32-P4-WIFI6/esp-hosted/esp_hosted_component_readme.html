@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <script defer data-domain="components.espressif.com" src="https://plausible.espressif.tools/js/script.file-downloads.hash.outbound-links.tagged-events.js"></script>
+        <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+        <script>
+            // Move theme toggler to the header to fix theme flicking
+            function toggleDarkMode(checked) {
+                const theme = checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+            }
+
+            let theme = localStorage.getItem('theme');
+            if (theme === null) {
+                // Check the system theme
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+            const is_theme_dark = theme === 'dark';
+            toggleDarkMode(is_theme_dark);
+        </script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <meta name="turbo-cache-control" content="no-cache">
+        <meta name="description" content="ESP Component Registry" />
+        <meta name="keywords"
+              content="ESP-IDF, Component Manager, Embedded, Components" />
+        <meta property="og:image"
+              content="http://components.espressif.com/static/registry_logo-304669f60b82f3fa014db12491b4a39d.jpg" />
+        <meta name="title" property="og:title" content="
+    espressif/esp_hosted • v2.12.9
+•
+    ESP Component Registry">
+        <meta name="description"
+              property="og:description"
+              content="
+    Detail of component espressif/esp_hosted - 2.12.9
+">
+        <title>
+    espressif/esp_hosted • v2.12.9
+•
+    ESP Component Registry</title>
+        <link rel="icon"
+              href="https://djzegpl1r7m11.cloudfront.net/favicon-d2a5cd9740d9e966b3b775d84b599d91.ico" />
+        <link rel="preload"
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+              href="https://djzegpl1r7m11.cloudfront.net/fonts/inter/InterVariable-2bf3d951bf9d6109437ea0874bbf12fb.woff2" />
+        <link rel="preload"
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+              href="https://djzegpl1r7m11.cloudfront.net/fonts/jetbrains-mono/JetBrainsMono-Variable-b058178d7f309414f8f856b99fd80d9b.woff2" />
+        <link rel="stylesheet"
+              data-turbo-track="reload"
+              href="https://djzegpl1r7m11.cloudfront.net/styles/style-b0dcb396cd5874a3174dc68cb497197e.css" />
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/turbo.bundle-b6b42a4505872a289832c9377e846ec6.js"
+                data-turbo-track="reload"
+                defer></script>
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/md.bundle-5f0bc042a5e01ae3aad59a996a51d389.js"
+                data-turbo-track="reload"
+                defer></script>
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/enhancedSearch.bundle-15ed705523f4711d0af4a73531d660b3.js"
+                data-turbo-track="reload"
+                defer></script>
+        
+    <script>
+        async function copyToClipboard(elementId) {
+            await navigator.clipboard.writeText(document.getElementById(elementId).innerHTML.trim());
+        }
+    </script>
+    <script src="https://djzegpl1r7m11.cloudfront.net/js/sparkline-d1fb8b1dddbc616fa8e77326d701228e.js"></script>
+
+    </head>
+    <body class="min-h-screen bg-base-200 flex flex-col">
+        
+        <nav>
+            <div class="w-11/12 flex flex-wrap items-center justify-between mx-auto pt-6">
+                <a href="/"
+                   class="cursor-pointer flex items-center shrink-0 text-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+     id="_图层_1"
+     viewBox="107.32 65.82 585.36 156.5"
+     width="170px"
+     height="45px"
+     class="fill-current">
+    <title>ESP Component Registry</title>
+    <defs>
+    <style>.cls-1{fill:#e7352c;}</style>
+    </defs>
+    <g>
+    <polygon points="122.04 151.52 149.21 151.52 149.21 139.68 122.04 139.68 122.04 125.33 150.28 125.33 150.28 113.3 107.32 113.3 107.32 183.07 150.48 183.07 150.48 171.04 122.04 171.04 122.04 151.52" />
+    <path d="M190.99,141.06c-10.01-4.07-13.14-6.38-13.14-10.18s3.63-6.85,8.83-6.85c5.49,0,9.32,2.5,12.36,6.75l9.42-7.96c-4.71-6.57-12.06-10.83-22.36-10.83-13.44,0-23.15,8.33-23.15,19.34s7.16,15.45,19.22,20.36c10.01,4.07,12.75,6.94,12.75,12.03s-3.63,8.61-9.81,8.61-11.77-3.24-15.5-10.09l-10.1,7.13c4.22,8.79,13.34,14.99,26.29,14.99,13.73,0,24.13-8.24,24.13-20.82,0-11.38-5.79-17.3-18.93-22.49Z" />
+    <path d="M239.05,113.3h-17.75v69.77h14.71v-26.37h5.89c15.5,0,26.29-7.96,26.29-21.84,0-15.73-11.87-21.56-29.13-21.56Zm.98,31.55h-4.02v-19.62h3.63c9.12,0,14.13,2.96,14.13,9.62s-4.81,9.99-13.73,9.99Z" />
+    <path d="M443.21,131.68c-12.53,0-21.45,9.01-21.45,22.88s8.92,22.71,21.88,22.71c8.92,0,16.39-4.07,20.16-12.1l-10.9-3.71c-2.32,4.24-5.06,6.18-9.09,6.18-5.75,0-9.01-4.15-9.44-10.51h30.03v-2.3c0-14.4-8.24-23.15-21.19-23.15Zm-8.32,17.05c.94-4.42,3.95-7.42,8.49-7.42s7.81,2.74,8.41,7.42h-16.9Z" />
+    <path d="M503.09,137.69h-.09c-3.95-4.24-8.07-5.92-13.3-5.92-11.07,0-18.88,9.98-18.88,22.35s7.81,22.44,18.96,22.44c5.41,0,9.52-2.12,13.38-6.36h.09v5.83c0,8.22-3.69,12.37-10.29,12.37-5.92,0-8.84-2.39-9.87-7.86l-11.5,.71c.94,11.4,9.09,17.14,21.53,17.14,14.33,0,22.22-8.3,22.22-23.94v-41.61h-12.27v4.86Zm-9.7,28.54c-6.18,0-10.04-5.04-10.04-11.93s4.12-11.66,10.12-11.66,10.21,5.04,10.21,11.75-4.2,11.84-10.3,11.84Z" />
+    <rect x="526.51" y="132.83" width="12.44" height="43.21" />
+    <path class="cls-1" d="M532.6,114.4c-4.2,0-7.55,3.18-7.55,7.33,0,4.42,3.43,7.51,7.63,7.51s7.64-3.09,7.64-7.51-3.43-7.33-7.72-7.33Z" />
+    <path d="M567.43,149.71c-6.35-2.65-7.89-3.62-7.89-5.39,0-1.59,1.37-2.65,3.78-2.65,2.57,0,5.32,1.5,6.95,3.27l6.52-7.69c-2.83-3.36-7.72-5.57-13.9-5.57-8.15,0-15.01,4.68-15.01,13.08,0,6.36,3.6,10.07,10.73,12.9,5.83,2.56,7.46,3.62,7.46,5.92s-1.54,3.45-4.46,3.45c-3.6,0-6.44-1.94-8.67-5.04l-7.04,7.51c2.75,4.06,8.07,7.78,16.22,7.78,9.27,0,15.87-5.48,15.87-14.4,0-6.54-3.17-10.25-10.55-13.17Z" />
+    <polygon points="600.12 117.55 587.68 117.55 587.68 132.83 580.99 132.83 580.99 144.14 587.68 144.14 587.68 176.04 600.12 176.04 600.12 144.14 607.58 144.14 607.58 132.83 600.12 132.83 600.12 117.55" />
+    <path d="M626.8,137.25h-.26l.17-4.42h-12.44v43.21h12.44v-20.94c0-7.42,2.66-11.31,7.72-11.31,2.15,0,3.95,.79,5.75,2.12l3.35-12.28c-2.23-1.24-4.38-1.94-6.26-1.94-4.63,0-7.29,1.59-10.47,5.57Z" />
+    <polygon points="679.04 132.5 668.48 157.06 657.5 132.5 643.52 132.5 662.13 168.2 647.21 197.79 660.93 197.79 692.68 132.5 679.04 132.5" />
+    </g>
+    <g>
+    <path class="cls-1" d="M409.35,196.98c-13.28,12.87-31.36,20.82-51.27,20.82-40.66,0-73.73-33.08-73.73-73.73s33.08-73.73,73.73-73.73c19.92,0,38.01,7.95,51.29,20.84,.87-1.25,2.01-2.29,3.35-3.04-14.11-13.79-33.4-22.32-54.64-22.32-43.15,0-78.25,35.1-78.25,78.25s35.1,78.25,78.25,78.25c21.23,0,40.5-8.51,54.61-22.28-1.33-.75-2.48-1.8-3.34-3.05Z" />
+    <path class="cls-1" d="M410.08,96.85c0,4.14,3.35,7.49,7.49,7.49s7.49-3.35,7.49-7.49-3.35-7.49-7.49-7.49-7.49,3.35-7.49,7.49Z" />
+    <path class="cls-1" d="M417.58,183.84c-4.14,0-7.49,3.35-7.49,7.49s3.35,7.49,7.49,7.49,7.49-3.35,7.49-7.49-3.35-7.49-7.49-7.49Z" />
+    <path class="cls-1" d="M358.08,200.37c8.04,0,15.69-1.7,22.61-4.74v-14.18h14.6l2.57,2.45c10.21-10.19,16.52-24.28,16.52-39.85,0-31.1-25.21-56.31-56.31-56.31s-56.31,25.21-56.31,56.31c0,18.53,8.95,34.96,22.76,45.22v-7.83h17.99v16.72c4.94,1.42,10.16,2.19,15.56,2.19Zm-.2-40.03v1.68h-14.63v-17.99h17.99v16.32h-3.37Zm-15.62-41.78v-5.93h1.27v5.93h-1.27Zm16.43,42.54h5.93v.92h-5.93v-.92Zm21.28,34.27l-13.9-13.9h13.9v13.9Zm0-14.64h-14.6l-3.39-3.23v-14.76h17.99v17.99Zm.69,.05v-13.9l13.9,13.9h-13.9Zm-.97-24.79v-5.93h1.27v5.93h-1.27Zm19.01,2.64l-3.23,3.39h-14.76v-5.27h.96v-7.46h-.96v-5.27h16.33v3.37h1.67v11.23Zm0-12.01h-.92v-5.93h.92v5.93Zm0-18.07v11.4h-1.67v3.37h-16.33v-17.99h14.6l3.39,3.23Zm-18.01-17.85l13.9,13.9h-13.9v-13.9Zm-18.71-4.09h14.6l3.39,3.23v14.76h-17.99v-17.99Zm0,37.42h17.99v5.27h-.97v7.46h.97v5.27h-14.63v-1.68h-3.36v-16.32Zm-18.72-37.42h17.99v17.99h-17.99v-5.35h.97v-7.46h-.97v-5.19Zm-18.73,3.23l3.39-3.23h14.6v5.19h-.96v7.46h.96v5.35h-17.99v-14.76Zm0,15.48h17.99v17.99h-16.32v-3.29h-1.67v-14.7Zm0,15.38h.92v5.93h-.92v-5.93Zm0,6.63h1.67v-3.3h16.32v14.71h-1.66v3.28h-16.33v-14.7Zm17.97,12.1v5.93h-.92v-5.93h.92Zm-17.97,21.31v-17.99h16.33v3.3h1.66v14.69h-17.99Z" />
+    </g>
+</svg>
+                </a>
+                <button class="btn btn-outline border-gray bg-base-100 background-hover highlight-hover btn-sm md:hidden"
+                        onclick="mobileMenuClick(this)">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6"
+                         aria-hidden="true"
+                         fill="currentColor"
+                         viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto">
+                    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 items-center justify-center gap-4 md:gap-0">
+                        <li>
+                            <a href="https://docs.espressif.com/projects/idf-component-manager/"
+                               target="_blank"
+                               class="link link-hover">Docs</a>
+                        </li>
+                        <li>
+                            <a href="https://developer.espressif.com/tags/component/"
+                               target="_blank"
+                               class="link link-hover">Blog</a>
+                        </li>
+                        
+                            <li>
+                                <a href="/users/login" class="link link-hover">Sign in</a>
+                            </li>
+                        
+                        <li>
+                            <label class="flex cursor-pointer gap-2">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 32 32"
+                                     class="fill-current w-5 h-5 mr-1">
+                                    <path d="M 15 3 L 15 8 L 17 8 L 17 3 Z M 7.5 6.09375 L 6.09375 7.5 L 9.625 11.0625 L 11.0625 9.625 Z M 24.5 6.09375 L 20.9375 9.625 L 22.375 11.0625 L 25.90625 7.5 Z M 16 9 C 12.144531 9 9 12.144531 9 16 C 9 19.855469 12.144531 23 16 23 C 19.855469 23 23 19.855469 23 16 C 23 12.144531 19.855469 9 16 9 Z M 16 11 C 18.773438 11 21 13.226563 21 16 C 21 18.773438 18.773438 21 16 21 C 13.226563 21 11 18.773438 11 16 C 11 13.226563 13.226563 11 16 11 Z M 3 15 L 3 17 L 8 17 L 8 15 Z M 24 15 L 24 17 L 29 17 L 29 15 Z M 9.625 20.9375 L 6.09375 24.5 L 7.5 25.90625 L 11.0625 22.375 Z M 22.375 20.9375 L 20.9375 22.375 L 24.5 25.90625 L 25.90625 24.5 Z M 15 24 L 15 29 L 17 29 L 17 24 Z" />
+                                </svg>
+                                <input type="checkbox"
+                                       name="mode-switcher"
+                                       class="toggle border-gray highlight-animation highlight-hover" />
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 32 32"
+                                     class="fill-current w-5 h-5 ml-1">
+                                    <path d="M 5 5 L 5 7 L 3 7 L 3 9 L 5 9 L 5 11 L 7 11 L 7 9 L 9 9 L 9 7 L 7 7 L 7 5 Z M 20.28125 7.9375 L 18.625 8 C 13.28125 8.191406 9 12.578125 9 17.96875 C 9 23.480469 13.488281 27.96875 19 27.96875 C 24.390625 27.96875 28.777344 23.6875 28.96875 18.34375 L 29.03125 16.71875 L 27.5625 17.40625 C 26.78125 17.777344 25.914063 17.96875 25 17.96875 C 21.675781 17.96875 19 15.292969 19 11.96875 C 19 11.054688 19.222656 10.21875 19.59375 9.4375 Z M 17.375 10.3125 C 17.25 10.867188 17 11.375 17 11.96875 C 17 16.375 20.59375 19.96875 25 19.96875 C 25.605469 19.96875 26.121094 19.722656 26.6875 19.59375 C 25.925781 23.21875 22.859375 25.96875 19 25.96875 C 14.570313 25.96875 11 22.398438 11 17.96875 C 11 14.117188 13.757813 11.082031 17.375 10.3125 Z" />
+                                </svg>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header>
+            
+            
+        </header>
+        <div class="toast z-50">
+            
+        </div>
+        <div class="mb-8">
+            
+    <div class="container w-11/12 mx-auto mt-10">
+        
+    <script>
+        function addDependency() {
+            if (window && window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                        message: "install",
+                        component: "main",
+                        dependency: "espressif/esp_hosted^2.12.9",
+                    },
+                    "*"
+                );
+            }
+        }
+    </script>
+    <div class="rounded px-5 pt-2 md:px-10 md:pt-5">
+        <div class="flex flex-col flex-wrap md:items-center md:flex-row md:whitespace-nowrap mt-2">
+            <h1 class="pb-2 font-semibold text-3xl overflow-wrap-anywhere md:mr-2">
+                <a href="/components?q=namespace:espressif"
+                   class="link link-hover-red">espressif</a>/esp_hosted
+            </h1>
+            <div class="py-2 lg:py-0 mr-auto">
+                <div class="flex items-center text-xs mr-auto md:mr-0">
+                    <p class="mr-1 text-xl">2.12.9</p>
+                    
+                        <span class="badge badge-success text-white text-sm whitespace-nowrap">Latest</span>
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+            
+            <div class="flex flex-col flex-wrap gap-x-1 gap-y-2 md:flex-row">
+                
+                    
+                    <a class="font-semibold"
+                       href="/components/espressif/esp_hosted/versions/3.0.0-rc1/readme?language=en">
+                        <button class="btn btn-outline background-hover highlight-hover border-gray bg-base-100 btn-sm">
+                            Pre-release version: 3.0.0-rc1
+                        </button>
+                    </a>
+                
+                
+                <form method="post"
+                      data-turbo="true"
+                      action="/components/espressif/esp_hosted/star?next=http://components.espressif.com/components/espressif/esp_hosted/versions/2.12.9/readme">
+                    
+                    <button type="submit"
+                            class="btn btn-outline border-gray bg-base-100 background-hover highlight-hover btn-sm">
+                        <svg class="w-4 h-4 fill-current "
+                                viewBox="0 0 32 32">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z"/>
+</svg>
+
+                        </svg>
+                        <svg class="w-4 h-4 fill-current hidden"
+                                viewBox="0 0 32 32">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <path d="M16.5 7.5h-9v9h9v-9Z"/>
+  <path fill-rule="evenodd" d="M8.25 2.25A.75.75 0 0 1 9 3v.75h2.25V3a.75.75 0 0 1 1.5 0v.75H15V3a.75.75 0 0 1 1.5 0v.75h.75a3 3 0 0 1 3 3v.75H21A.75.75 0 0 1 21 9h-.75v2.25H21a.75.75 0 0 1 0 1.5h-.75V15H21a.75.75 0 0 1 0 1.5h-.75v.75a3 3 0 0 1-3 3h-.75V21a.75.75 0 0 1-1.5 0v-.75h-2.25V21a.75.75 0 0 1-1.5 0v-.75H9V21a.75.75 0 0 1-1.5 0v-.75h-.75a3 3 0 0 1-3-3v-.75H3A.75.75 0 0 1 3 15h.75v-2.25H3a.75.75 0 0 1 0-1.5h.75V9H3a.75.75 0 0 1 0-1.5h.75v-.75a3 3 0 0 1 3-3h.75V3a.75.75 0 0 1 .75-.75ZM6 6.75A.75.75 0 0 1 6.75 6h10.5a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V6.75Z" clip-rule="evenodd"/>
+</svg>
+
+                        </svg>
+                        <span class="ml-1">Star</span>
+                        <span class="ml-1">0</span>
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+        <div class="text-sm text-base-content/60">uploaded 2 weeks ago</div>
+        
+        
+            <div class="overflow-hidden mt-2">ESP-Hosted-MCU provide drivers to act any ESP chipset as Wi-Fi or Bluetooth co-processor.</div>
+        
+        <div role="tablist"
+             class="grid grid-cols-1 auto-rows-fr md:grid-cols-none items-start tabs whitespace-nowrap mt-6">
+            <a href="/components/espressif/esp_hosted/versions/2.12.9/readme?language=en"
+               role="tab"
+               class="tab mt-1 md:mt-0 tab-active pointer-events-none">Readme</a>
+            
+            
+                <a href="/components/espressif/esp_hosted/versions/2.12.9/changelog?language=en"
+                   role="tab"
+                   class="tab mt-1 md:mt-0 ">Changelog</a>
+            
+            <a href="/components/espressif/esp_hosted/versions/2.12.9/dependencies?language=en"
+               role="tab"
+               class="tab mt-1 md:mt-0  ">Dependencies <span class="badge badge-outline border-gray ml-2">1</span></a>
+            <a href="/components/espressif/esp_hosted/versions/2.12.9/dependents?language=en"
+               role="tab"
+               class="tab mt-1 md:mt-0  ">Dependents <span class="badge badge-outline border-gray ml-2">6</span></a>
+            <a href="/components/espressif/esp_hosted/versions/2.12.9/examples?language=en"
+               role="tab"
+               class="tab mt-1 md:mt-0  ">Examples <span class="badge badge-outline border-gray ml-2">22</span></a>
+            <a href="/components/espressif/esp_hosted/versions/2.12.9/versions?language=en"
+                role="tab"
+                class="tab mt-1 md:mt-0 ">Versions <span class="badge badge-outline border-gray ml-2">106</span></a>
+        </div>
+    </div>
+
+        <div class="flex flex-col-reverse md:flex-row mt-4 w-full px-5 md:px-0">
+            <div class="md:basis-2/3 px-5 md:px-10 md:w-0 relative">
+                <div id="spinner-container"
+                     class="absolute left-1/2 z-10 pointer-events-none">
+                    <div class="loading loading-spinner loading-lg text-secondary"></div>
+                </div>
+                
+                    
+                        
+                            <h2 id="readme" class="font-semibold mb-2">Readme</h2>
+                        
+                        
+                            
+                                <pre class="prose max-w-full mb-5 md:mb-10 markdown whitespace-pre-wrap" repository_commit_https="https://github.com/espressif/esp-hosted-mcu/tree/09d9e983c9fc9d425d106177110165a89072533a/."># ESP-Hosted-MCU: Espressif SoCs as Communication Co-Processors
+
+[![Component Registry](https://components.espressif.com/components/espressif/esp_hosted/badge.svg)](https://components.espressif.com/components/espressif/esp_hosted)
+
+## 1 Introduction
+
+ESP-Hosted-MCU is an open-source solution that allows you to use Espressif Chipsets and modules as a communication co-processor. This solution provides wireless connectivity (Wi-Fi and Bluetooth) to the host microprocessor or microcontroller, enabling it to communicate with other devices. Additionally, the user has complete control over the co-processor&#39;s resources.
+
+This high-level block diagram shows ESP-Hosted&#39;s relationship with the host MCU and slave co-processor.
+
+&lt;img src=&#34;docs/images/ESP-Hosted-FG-MCU_design.svg&#34; alt=&#34;ESP-Hosted&#34;&gt;
+
+For detailed design diagrams in Wi-Fi and Bluetooth, refer to the following design documents:
+
+- [WiFi Design](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/wifi_design.md)
+- [Bluetooth Design](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/bluetooth_design.md)
+
+`esp-hosted-mcu` is dedicated for any host as MCU support. If you are interested in Linux as host, please refer to the [`esp-hosted`](https://github.com/espressif/esp-hosted) repository.
+
+## 2 Architecture
+
+##### Hosted Co-Processor
+This is an ESP chip that provides Wi-Fi, Bluetooth, and other capabilities. It is also referred as `hosted-slave` interchangeably.
+
+##### Host MCU
+This can be any generic microcontroller (MCU). We demonstrate any ESP as host. Using port layer, any host can act as host MCU.
+
+##### Communication
+- Host extends the capabilities of the Hosted co-processor through Remote Procedure Calls (RPCs). The Host MCU sends these RPC commands to the Hosted co-processor using a reliable communication bus, like SPI, SDIO, or UART. The Hosted co-processor then handles the RPC and provides the requested functionality to the Host MCU.
+- The data (network or Bluetooth) is packaged efficiently at the transport layer to minimize overhead and delays when passing between the Host and co-processor.
+- This modular design allows any MCU to be used as the Host, and any ESP chip with Wi-Fi and/or Bluetooth to be used as the Hosted co-processor. The RPC calls can also be extended to provide any function required by the Host, as long as the co-processor can support it.
+- The RPCs implemented are [listed in this document](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/implemented_rpcs.md), including the ESP-Hosted release version that implements the RPCs.
+
+## 3 Solution Flexibility
+
+- **Any MCU can be the host**
+  - You can evaluate ESP as an example host and then port ESP-Hosted to your desired MCU.
+- **Any ESP chip can be the co-processor**
+  - Any Wi-Fi and/or Bluetooth capable ESP chipset can be chosen as co-processor
+  - Choose the co-processor device based on your product requirements. The [ESP Product Selector](https://www.espressif.com/en/products/socs) can help in this.
+- **Flexible transport layer (SDIO, SPI, UART)**
+  - ESP-Hosted supports various communication interfaces between the host and the co-processor, allowing you to choose the most suitable one for your application.
+  - Any other new transport also could be added to the open source code
+- **Complete control over co-processor&#39;s resources**
+  - The user is not limited to just using the co-processor for wireless connectivity. They have complete control over the co-processor&#39;s resources, allowing for a more flexible and powerful system.
+- **Extensible RPC library**
+  - The Remote Procedure Call (RPC) used by ESP-Hosted can be extended to provide any function required by the Host, as long as the co-processor can support it. Currently, the essential [ESP-IDF](https://github.com/espressif/esp-idf) Wi-Fi functions have been implemented.
+
+## 3.1 Features Supported by ESP-Hosted
+
+See the [Features](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/features.md) document for features currently supported by ESP-Hosted.
+
+## 4 Quick Demo with ESP32-P4-Function-EV-Board
+
+Impatient to test? We&#39;ve got you covered!
+The [ESP32-P4-Function-EV-Board](https://www.espressif.com/en/products/socs/esp32-p4) can be used as a host MCU with an on-board [ESP32-C6](https://www.espressif.com/en/products/socs/esp32-c6) as co-processor, already connected via SDIO as transport.
+Prerequisite: You need to have an ESP32-P4-Function-EV-Board`
+
+&gt; [!NOTE]
+&gt; If you have already set up ESP-IDF (version 5.3 or later), you can skip to [5 Source Code and Dependencies](#5-source-code-and-dependencies).
+
+### 4.1 Set-Up ESP-IDF
+
+- Windows
+  - Install and setup ESP-IDF on Windows as documented in the [Standard Setup of Toolchain for Windows](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html).
+  - Use the ESP-IDF [Powershell Command Prompt](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#using-the-command-prompt) to move to expected
+
+- Linux or MacOS
+  - bash
+```bash
+bash docs/setup_esp_idf__latest_stable__linux_macos.sh
+```
+  - fish
+```fish
+fish docs/setup_esp_idf__latest_stable__linux_macos.fish
+```
+
+### 4.2 Set-Up P4 with C6
+The host, ESP32-P4, lacks native Wi-Fi/Bluetooth support. Our [Quick Demo](docs/esp32_p4_function_ev_board.md) will help you run iperf over P4--SDIO--C6.
+
+### 4.3 Don&#39;t Have ESP32-P4-Function-EV-Board?
+
+No worries if you don&#39;t have an ESP32-P4. In fact, most users don&#39;t. You can choose and use any two ESP chipsets/SoCs/Modules/DevKits. DevKits are convenient to use as they have GPIO headers already in place. From these two ESP chipsets, one would act as host and another as slave/co-processor. However, as these are not connected directly, you would need to manually connect some transport, which is explained later in the section [`Detailed Setup`](#7-detailed-setup).
+
+## 5 Source Code and Dependencies
+
+### 5.1 ESP-Hosted-MCU Source Code
+
+- ESP-Hosted-MCU code can be found at Espressif Registry Component [`esp_hosted` (ESP-Hosted)](https://components.espressif.com/components/espressif/esp_hosted) or GitHub repo at [`esp-hosted-mcu`](https://github.com/espressif/esp-hosted-mcu/)
+
+- ESP-Hosted repo clone is **not** required if you have ESP as host.
+  - Reason: [ESP component manager](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/tools/idf-component-manager.html) automatically clones esp-hosted component while building.
+- However, For non-ESP host development, you can clone the repo using command:
+```bash
+git clone --recurse-submodules --depth 1 https://github.com/espressif/esp-hosted-mcu.git
+```
+
+### 5.2 Dependencies
+
+ESP-Hosted-MCU Solution is dependent on `ESP-IDF`, `esp_wifi_remote` and `protobuf-c`
+
+###### ESP-IDF
+  - [`ESP-IDF`](https://github.com/espressif/esp-idf) is the development framework for Espressif SoCs supported on Windows, Linux and macOS
+  - ESP-Hosted-MCU solution is based on ESP-IDF as base software. ESP chipsets as host and slave always tried to design such a way that ESP-IDF components are reused.
+  - Although, We totally understand, host MCUs in case of non-ESP chipset may not desire to be dependent on ESP-IDF. The port layer is written to avoid suc dependencies. Some crucial ESP-IDF components could also be just copy-pasted to fast-track the non-ESP host development.
+
+###### Wi-Fi Remote
+  - [`esp_wifi_remote`](https://components.espressif.com/components/espressif/esp_wifi_remote) i.e. &#39;Wi-Fi Remote&#39; is very thin interface made up of ESP-IDF Wi-Fi APIs with empty weak definitions. Real definitions for these APIs are provided by ESP-Hosted-MCU
+  - Wi-Fi Remote Code can be found at either [GitHub Repo](https://github.com/espressif/esp-wifi-remote/) or [Espressif Registry Component](https://components.espressif.com/components/espressif/esp_wifi_remote)
+
+###### Protobuf
+  - [`protobuf-c`](https://github.com/protobuf-c/protobuf-c) is data serialization framework provided by Google. RPC messages communicated in host and slave are protobuf encoded.
+  - It helps to avoid manual serialization or endian-ness conversion.
+  - Provides Flexibility for users to port the ESP-Hosted-MCU RPC framework in any protobuf supported programming language
+  - Code is checked-out as submodule at `common/protobuf-c`
+
+##### 5.2.1 How Dependencies Work Together (short explanation)
+- RPC Request - Response
+  - Wi-Fi Remote is an API layer or interface that provides the standard ESP-IDF Wi-Fi calls to the application (`esp_wifi_init()`, etc.)
+  - Wi-Fi Remote forwards the Wi-Fi calls to ESP-Hosted, as ESP-Hosted &#39;implements&#39; the APIs provided by Wi-Fi Remote interface.
+  - ESP-Hosted host MCU creates RPC requests which are protobuf encoded and sends over the transport (SPI/SDIO etc) to the slave.
+  - Slave de-serialize the protobuf RPC request and response send back to host over transport, again with protobuf serialised.
+  - Responses received at transport returned to Wi-Fi Remote, which returns the responses to the calling app at host
+  - To the app, it is as if it made a standard ESP-IDF Wi-Fi API call.
+- RPC Event
+  - Asynchronous Wi-Fi events when subscribed, are sent by slave to host.
+  - These events terminate in standard ESP-IDF event loop on the host
+- Please note, Only RPC i.e. control packets are serialised. Data Packets are never serialised as they do not need endian conversion.
+
+## 6 Decide the communication bus in between host and slave
+
+The communication bus is required to be setup correctly between host and slave.
+We refer this as `transport medium` or simply `transport`.
+
+ESP-Hosted-MCU supports SPI/SDIO/UART transports. User can choose which transport to use. Choosing specific transport depends on factors: high performance, easy and quick to test, number of GPIOs used, or simply co-processor preference
+
+Below is chart for the transport medium comparison.
+
+Legends:
+
+- `FD` : Full duplex communication
+- `HD` : Half duplex communication
+- `BT` : Bluetooth
+- `+2` in column `Num of GPIOs`
+  - There are two GPIOs additional applicable for all the transports
+  - (1) Co-Processor reset: Host needs one additional pin to connect to `RST`/`EN` pin of co-processor, to reset on boot-up
+  - (2) Ground: Grounds of both chipsets need to be connected.
+  - If you use jumper cable connections, connect as many grounds as possible in between two boards for better noise cancellation.
+- `Any_Slave`
+  - Co-processor supported: ESP32, ESP32-C2, ESP32-C3, ESP32-C5, ESP32-C6, ESP32-S2, ESP32-S3
+  - Classic ESP32 supports &#39;Classic BT&#39;, &#39;BLE 4.2&#39; &amp; &#39;BTDM&#39;
+  - Rest all chipsets support BLE only. BLE version supported is 5.0+. Exact bluetooth versions could be referred from [ESP Product Selector Page](https://products.espressif.com/#/product-selector)
+- `Dedicated platforms`
+  - Bluetooth uses dedicated platform, UART and Wi-Fi uses any other base transport
+  - In other platforms, Bluetooth and Wi-Fi reuse same platform and hence use less GPIOs and less complicated
+  - This transport combination allows Bluetooth to use dedicated uart transportt with additional 2 or 4 depending on hardware flow control.
+- TBD : To be determined
+- iperf : iperf2 with test results in Mbits/sec
+
+&gt; [!NOTE]
+&gt; For the shield box readings marked with (S), full network set up explained in [Shield Box Test Setup](shield-box-test-setup.md)
+
+**Host can be any ESP chipset or any non-ESP MCU.**
+
+###### Hosted Transports table
+| Transport | Type | Num of GPIOs | Setup with | Co-processor supported | Host Tx iperf | Host Rx iperf | Remarks |
+|:---------------:|:-----:|:------------:|:----------------:|:--------------:|:------------:|:-----------:|:--------------------------:|
+| Standard SPI | FD | 6 | jumper or PCB | Any_Slave | udp: 24 tcp: 22 | udp: 25 tcp: 22| Simplest solution for quick test |
+| 1-bit SPI | HD | 4 | jumper or PCB | Any_Slave &lt;sub&gt;[1]&lt;/sub&gt; | udp: 22 tcp: 19 &lt;sub&gt;(O)&lt;/sub&gt; | udp: 20 tcp: 17 &lt;sub&gt;(O)&lt;/sub&gt; | 1-bit, half duplex |
+| Dual SPI | HD | 5 | jumper or PCB | Any_Slave &lt;sub&gt;[1]&lt;/sub&gt; | udp: 32 tcp: 26 &lt;sub&gt;(O)&lt;/sub&gt; | udp: 33 tcp: 25 &lt;sub&gt;(O)&lt;/sub&gt; | Better throughput, but half duplex |
+| Quad SPI | HD | 7 | PCB only | Any_Slave &lt;sub&gt;[1]&lt;/sub&gt; | udp: 41 tcp: 29 &lt;sub&gt;(O)&lt;/sub&gt; | udp: 42 tcp: 28 &lt;sub&gt;(O)&lt;/sub&gt; | Due to signal integrity, PCB is mandatory |
+| SDIO 1-Bit | HD | 4  | jumper or PCB | ESP32, ESP32-C6, ESP32-C5, ESP32-C61 | TBD | TBD | Stepping stone for PCB based SDIO 4-bit |
+| SDIO 4-Bit | HD | 6 | PCB only | ESP32, ESP32-C6, ESP32-C5, ESP32-C61 &lt;sub&gt;[3]&lt;/sub&gt; | udp: 79.5 tcp: 53.4 &lt;sub&gt;(S)&lt;/sub&gt; | udp: 68.1 tcp: 44 &lt;sub&gt;(S)&lt;/sub&gt; | Highest performance |
+| Only BT over UART | FD | 2 or 4 | jumper or PCB | Any_Slave | NA | NA | Dedicated Bluetooth over UART pins |
+| UART | FD | 2 | jumper or PCB | Any_Slave | udp: 0.68 tcp: 0.67 &lt;sub&gt;(O)&lt;/sub&gt; | udp: 0.68 tcp: 0.60 &lt;sub&gt;(O)&lt;/sub&gt; | UART dedicated for BT &amp; Wi-Fi &lt;sub&gt;[2]&lt;/sub&gt; |
+| Dedicated platforms | FD | Extra 2 or 4 | jumper or PCB | Any_Slave | NA | NA | UART dedicated for BT &amp; Wi-Fi on any other transport |
+
+&gt; [!NOTE]
+&gt; - [1] 1-bit/Dual/Quad SPI is not supported on ESP32
+&gt; - [2] UART is suitable only for low throughput environments. Throughput was obtained with a baud rate of 921600. On the ESP32-P4 + C6 development board, a baud rate of 4 Mbits/s can be achieved, giving TCP/UDP throughput of around 3.3 MBits/s.
+&gt; - [3] SDIO 4-Bit performance figures are measured with ESP32-C6 in shield box with 40MHz bandwidth
+&gt; - (S) Shield box measurements
+&gt; - (O) Over-the-air measurements
+&gt; - FD Full duplex interface
+&gt; - HD Half duplex interface
+
+With jumper cables, &#39;Standard SPI&#39; and &#39;Dual SPI&#39; solutions are easiest to evaluate, without much of hardware dependencies. SDIO 1-Bit can be tested with jumper cables, but it needs some additional hardware config, such as installation of external pull-up registers.
+
+In case case of dedicated platforms, Bluetooth uses standard HCI over UART. In rest of cases, Bluetooth and Wi-Fi uses same transport and hence less GPIOs and less complicated. In shared mode, bluetooth runs as Hosted HCI (multiplexed mode)
+
+## 7 ESP-Hosted-MCU Header
+
+### 7.1 ESP Hosted header
+
+Host and slave always populate below header at the start of every frame, irrespective of actual or dummy data in payload.
+
+| Field                             | Type     | Bits   | Mandatory? | Description                                                |
+|-----------------------------------|----------|--------|------------|------------------------------------------------------------|
+| if_type                           | uint8_t  | 4      | M          | Interface type                                             |
+| if_num                            | uint8_t  | 4      | M          | Interface number                                           |
+| flags                             | uint8_t  | 8      | M          | Flags for additional information                           |
+| len                               | uint16_t | 16     | M          | Length of the payload                                      |
+| offset                            | uint16_t | 16     | M          | Offset for the payload                                     |
+| checksum                          | uint16_t | 16     | M          | Checksum for error detection  (0 if checksum disabled)     |
+| seq_num                           | uint16_t | 16     | O          | Sequence number for tracking packets (Useful in debugging) |
+| throttle_cmd                      | uint8_t  | 0 or 2 | O          | Flow control command                                       |
+| reserved2                         | uint8_t  | 6 or 8 | M          | Reserved bits                                              |
+| reserved3                         | uint8_t  | 8      | M          | Reserved byte (union field)                                |
+| hci\_pkt\_type or priv\_pkt\_type | uint8_t  | 8      | M          | Packet type for HCI interface (union field)                |
+
+### 7.2 Interface Types
+
+Start of header states which type of frame is being carried.
+
+| Interface Type   | Value | Description                                  |
+|------------------|-------|----------------------------------------------|
+| ESP\_INVALID\_IF | 0     | Invalid interface                            |
+| ESP\_STA\_IF     | 1     | Station frame                                |
+| ESP\_AP\_IF      | 2     | SoftAP frame                                 |
+| ESP\_SERIAL\_IF  | 3     | Control frame                                |
+| ESP\_HCI\_IF     | 4     | Bluetooth Hosted HCI frame                   |
+| ESP\_PRIV\_IF    | 5     | Private communication between slave and host |
+| ESP\_TEST\_IF    | 6     | Transport throughput test                    |
+| ESP\_ETH\_IF     | 7     | Invalid                                      |
+| ESP\_MAX\_IF     | 8     | type mentioned in dummy or empty frame       |
+
+## 8 Detailed Setup
+
+Once you decided the transport to use, this section should guide how to set this transport, with hardware connections, configurations and verification. Users can evaluate one transport first and then move to other.
+
+&gt; [!IMPORTANT]
+&gt; [Design Considerations](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/design_consideration.md) that could be referred to, before you stick to any transport option. Referring to these consideration would help to get you faster to solution, make your design stable and less error-prone.
+
+
+Irrespective of transport chosen, following steps are needed, which are step-wise explained in each transport.
+
+1. Set-up the hosted-transport
+2. Slave Flashing
+  - Slave project creation
+  - Slave configuration
+  - Slave flashing
+  - Slave logs
+3. Host flashing
+  - Host project integration with ESP-IDF example
+  - Host configuration
+  - Host flashing
+  - Host logs
+
+- [**Standard SPI (Full duplex)**](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/spi_full_duplex.md)
+
+- [**SPI - Dual / Quad Half Duplex**](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/spi_half_duplex.md)
+
+- [**SDIO (1-Bit / 4-Bit)**](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/sdio.md)
+
+- [**UART for Wi-Fi and Bluetooth**](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/uart.md)
+
+## 9 Examples
+Check [examples](https://github.com/espressif/esp-hosted-mcu/tree/main/examples) directory for sample applications using ESP-Hosted.
+ - `examples/host_bluedroid_ble_compatibility_test`
+   - host BlueDroid Bluetooth example to test the Bluetooth compatibility and mobile phones
+ - `examples/host_bluedroid_bt_hid_mouse_device`
+   - host BlueDroid Bluetooth example to show how to implement a Bluetooth HID device using the APIs provided by Classic Bluetooth HID profile
+ - `examples/host_bluedroid_host_only`
+   - host BlueDroid Bluetooth example Bluetooth Host using ESP-Hosted as HCI IO to the BT Controller
+ - `examples/host_nimble_bleprph_host_only_vhci`
+   - host NimBLE Bluetooth example without needing extra GPIOs for HCI transport
+
+## 10 Troubleshooting
+
+If you encounter issues with using ESP-Hosted, see the following guide:
+
+- [Troubleshooting Guide](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/troubleshooting.md)
+- [Migration Guide](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/migration_guide.md)
+- if you are upgrading to ESP-Hosted version V2.5.2 (or later) from an earlier version, there has been a change in the operation of the Bluetooth Controller on the co-processor. See [Migrating to V2.5.2](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/migration_guide.md#migrating-to-v252) in the Migration Guide for more information.
+
+## 11 References
+
+- [ESP Product Selector Page](https://products.espressif.com)
+- [ESP-IDF Get Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started)
+- [ESP-IDF Wi-Fi API](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/network/esp_wifi.html)
+- [ESP-IDF Iperf Example](https://github.com/espressif/esp-idf/tree/master/examples/wifi/iperf)
+- [ESP-IDF NimBLE](https://github.com/espressif/esp-nimble)
+- [ESP Component Registry](https://components.espressif.com)
+- [Registry Component: esp\_wifi\_remote](https://components.espressif.com/components/espressif/esp_wifi_remote)
+- [Registry Component: esp\_hosted](https://components.espressif.com/components/espressif/esp_hosted)
+</pre>
+                            
+                        
+                    
+                
+            </div>
+            <div class="flex flex-col md:basis-1/3 pl-0 md:pl-12 pr-5 md:pr-10">
+                
+<script>
+    
+    var badge_info = {"base_url": "https://components.espressif.com", "name": "esp_hosted", "namespace": "espressif", "version": "2.12.9"};
+    async function copy_markdown_badge() {
+        const u = `${badge_info.base_url}/components/${badge_info.namespace}/${badge_info.name}`;
+        await navigator.clipboard.writeText(`[![Component Registry](${u}/badge.svg)](${u})`);
+    }
+    async function copy_html_badge() {
+        const u = `${badge_info.base_url}/components/${badge_info.namespace}/${badge_info.name}`;
+        await navigator.clipboard.writeText(`<a href="${u}">\n<img src="${u}/badge.svg" alt="${badge_info.namespace}/${badge_info.name} Version: ${badge_info.version}" />\n</a>`);
+    }
+</script>
+
+    
+    
+    
+    
+    
+        <div class="mb-2">
+            <h4 class="font-semibold inline-block mr-1 md:block">Links</h4>
+            <ul class="mr-1">
+                
+                
+                    <li class="flex items-center">
+                        <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>Homepage</title><path d="M 16 2.59375 L 15.28125 3.28125 L 2.28125 16.28125 L 3.71875 17.71875 L 5 16.4375 L 5 28 L 14 28 L 14 18 L 18 18 L 18 28 L 27 28 L 27 16.4375 L 28.28125 17.71875 L 29.71875 16.28125 L 16.71875 3.28125 Z M 16 5.4375 L 25 14.4375 L 25 26 L 20 26 L 20 16 L 12 16 L 12 26 L 7 26 L 7 14.4375 Z"/></svg>
+
+                        </svg>
+                        <a href="https://github.com/espressif/esp-hosted-mcu"
+                           class="link link-hover mx-2"
+                           target="_blank">Homepage</a>
+                        
+                    </li>
+                
+                
+                
+                    <li class="flex items-center">
+                        <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>Repository</title><path d="M 16 2 C 15.496094 2 15.003906 2.183594 14.625 2.5625 L 11.8125 5.40625 C 11.660156 5.488281 11.53125 5.605469 11.4375 5.75 L 2.5625 14.625 C 1.804688 15.378906 1.804688 16.617188 2.5625 17.375 L 14.625 29.4375 C 15.382813 30.191406 16.617188 30.191406 17.375 29.4375 L 29.4375 17.375 C 30.195313 16.621094 30.195313 15.382813 29.4375 14.625 L 17.375 2.5625 C 16.996094 2.183594 16.503906 2 16 2 Z M 16 4.03125 L 27.96875 16 L 16 27.96875 L 4.03125 16 L 12.3125 7.71875 L 14.0625 9.46875 C 14.015625 9.636719 14 9.816406 14 10 C 14 10.738281 14.402344 11.371094 15 11.71875 L 15 20.28125 C 14.402344 20.628906 14 21.261719 14 22 C 14 23.105469 14.894531 24 16 24 C 17.105469 24 18 23.105469 18 22 C 18 21.261719 17.597656 20.628906 17 20.28125 L 17 12.4375 L 20.0625 15.5 C 20.019531 15.660156 20 15.828125 20 16 C 20 17.105469 20.894531 18 22 18 C 23.105469 18 24 17.105469 24 16 C 24 14.894531 23.105469 14 22 14 C 21.828125 14 21.660156 14.019531 21.5 14.0625 L 17.9375 10.5 C 17.980469 10.339844 18 10.171875 18 10 C 18 8.894531 17.105469 8 16 8 C 15.816406 8 15.636719 8.015625 15.46875 8.0625 L 13.71875 6.3125 Z"/></svg>
+
+                        </svg>
+                        <a href="https://github.com/espressif/esp-hosted-mcu/tree/09d9e983c9fc9d425d106177110165a89072533a/."
+                           class="link link-hover mx-2"
+                           target="_blank">Repository</a>
+                        
+                        
+                            <div class="flex tooltip tooltip-copied float-right z-10"
+                                 data-tip="Copy commit SHA">
+                                <button onclick="copyToClipboard('commit_sha')">
+                                    <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 4 4 L 4 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 4 Z M 12 8 L 12 28 L 28 28 L 28 8 Z M 14 10 L 26 10 L 26 26 L 14 26 Z"/></svg>
+
+                                    </svg>
+                                </button>
+                            </div>
+                            <p id="commit_sha" class="hidden">09d9e983c9fc9d425d106177110165a89072533a</p>
+                        
+                    </li>
+                
+                
+                
+                
+                
+                    
+    <li class="flex items-center">
+        <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>License</title><path d="M 15 2 L 15 4 L 7.1875 4 L 5.125 10.125 C 2.757813 10.570313 1 12.605469 1 15 C 1 17.757813 3.242188 20 6 20 C 8.757813 20 11 17.757813 11 15 C 11 12.605469 9.242188 10.570313 6.875 10.125 L 8.625 5 L 15 5 L 15 26 L 9 26 L 9 28 L 23 28 L 23 26 L 17 26 L 17 5 L 23.375 5 L 25.125 10.125 C 22.757813 10.570313 21 12.605469 21 15 C 21 17.757813 23.242188 20 26 20 C 28.757813 20 31 17.757813 31 15 C 31 12.605469 29.242188 10.570313 26.875 10.125 L 24.8125 4 L 17 4 L 17 2 Z M 6 12 L 8.28125 14 L 3.71875 14 Z M 26 12 L 28.28125 14 L 23.71875 14 Z M 3 16 L 9 16 C 8.566406 17.164063 7.386719 18 6 18 C 4.613281 18 3.433594 17.164063 3 16 Z M 23 16 L 29 16 C 28.566406 17.164063 27.386719 18 26 18 C 24.613281 18 23.433594 17.164063 23 16 Z"/></svg>
+
+        </svg>
+        <a href="/components/espressif/esp_hosted/versions/2.12.9/license?language=en"
+           class="link link-hover mx-2"
+           target="">Apache-2.0</a>
+    </li>
+
+                
+            </ul>
+        </div>
+    
+
+<div class="mb-2">
+    
+        <h4 class="font-semibold">Supports all targets</h4>
+    
+</div>
+
+
+<div class="mb-2">
+    <div id="add-dependency-wrapper" style="display:none;">
+        <button id="add-dependency-btn"
+                class="btn btn-outline border-gray background-hover highlight-hover mb-1">
+            Add as dependency
+            <div id="add-dependency-spinner" style="display:none;">
+                <span class="loading loading-spinner loading-md text-secondary"></span>
+            </div>
+        </button>
+    </div>
+    <div id="cli-fallback" style="display:block;">
+        To add this component to your project, run:
+        <div class="bg-base-100 rounded p-4 my-1 border border-gray">
+            <div class="tooltip tooltip-copied float-right z-10" data-tip="Copy to Clipboard">
+                <button onclick="copyToClipboard('dependency_code')">
+                    <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 4 4 L 4 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 4 Z M 12 8 L 12 28 L 28 28 L 28 8 Z M 14 10 L 26 10 L 26 26 L 14 26 Z"/></svg>
+
+                    </svg>
+                </button>
+            </div>
+            <p id="dependency_code" class="overflow-wrap-anywhere">
+                idf.py add-dependency "espressif/esp_hosted^2.12.9"
+            </p>
+        </div>
+    </div>
+    <a href="/api/downloads/?object_type=component&amp;object_id=ebb9a13d-cd68-4005-9455-9500036897ca"
+       class="link link-hover-red"
+       target="_blank">download archive</a>
+</div>
+<div class="mb-2">
+    <h4 class="font-semibold">Stats</h4>
+    <ul>
+        
+            <li class="flex items-center">
+                <div>
+                    <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>Archive size</title><path d="M 6 3 L 6 29 L 26 29 L 26 3 Z M 8 5 L 15 5 L 15 6 L 17 6 L 17 5 L 24 5 L 24 27 L 8 27 Z M 15 7 L 15 9 L 17 9 L 17 7 Z M 15 10 L 15 12 L 17 12 L 17 10 Z M 15 13 L 15 15.1875 C 13.84375 15.605469 13 16.707031 13 18 C 13 19.644531 14.355469 21 16 21 C 17.644531 21 19 19.644531 19 18 C 19 16.707031 18.15625 15.605469 17 15.1875 L 17 13 Z M 16 17 C 16.5625 17 17 17.4375 17 18 C 17 18.5625 16.5625 19 16 19 C 15.4375 19 15 18.5625 15 18 C 15 17.4375 15.4375 17 16 17 Z"/></svg>
+
+                    </svg>
+                </div>
+                <div class="font-normal mx-2">
+                    Archive size ~ 9.69 MB 
+                </div>
+            </li>
+        
+        <li class="flex items-center">
+            <div>
+                <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                    <title>Downloaded in total</title>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 15 4 L 15 20.5625 L 9.71875 15.28125 L 8.28125 16.71875 L 15.28125 23.71875 L 16 24.40625 L 16.71875 23.71875 L 23.71875 16.71875 L 22.28125 15.28125 L 17 20.5625 L 17 4 Z M 7 26 L 7 28 L 25 28 L 25 26 Z"/></svg>
+
+                </svg>
+            </div>
+            <div class="font-normal mx-2">
+                Downloaded in total 406.9k  times
+            </div>
+        </li>
+        
+        <li class="mt-3 mb-1" id="sparkline-container">
+            <div class="flex items-center gap-2">
+                <svg class="fill-current w-4 h-4 shrink-0" viewBox="0 0 32 32">
+                    <title>Weekly Downloads</title>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 15 4 L 15 20.5625 L 9.71875 15.28125 L 8.28125 16.71875 L 15.28125 23.71875 L 16 24.40625 L 16.71875 23.71875 L 23.71875 16.71875 L 22.28125 15.28125 L 17 20.5625 L 17 4 Z M 7 26 L 7 28 L 25 28 L 25 26 Z"/></svg>
+
+                </svg>
+                <span class="font-normal">Weekly Downloads (All Versions)</span>
+            </div>
+            <div id="sparkline-week-info" class="flex justify-between items-baseline my-1">
+                <span id="sparkline-count"></span>
+                <span id="sparkline-dates" class="text-sm text-base-content/60"></span>
+            </div>
+            <div class="relative">
+                <svg id="sparkline-svg"
+                     viewBox="0 0 200 35"
+                     preserveAspectRatio="none"
+                     class="w-full"
+                     style="height: 2.5rem; cursor: crosshair;"
+                     role="img"
+                     aria-label="Weekly downloads chart">
+                <polygon points="0,35 0.0,35.0 3.8,33.7 7.7,33.6 11.5,33.3 15.4,32.9 19.2,34.4 23.1,34.2 26.9,34.2 30.8,34.4 34.6,34.5 38.5,34.6 42.3,34.5 46.2,33.9 50.0,34.5 53.8,34.6 57.7,34.0 61.5,33.6 65.4,33.7 69.2,33.4 73.1,33.3 76.9,33.0 80.8,32.9 84.6,33.5 88.5,32.4 92.3,27.7 96.2,27.9 100.0,31.3 103.8,30.6 107.7,29.7 111.5,30.4 115.4,27.1 119.2,26.1 123.1,28.4 126.9,27.1 130.8,27.9 134.6,25.0 138.5,26.5 142.3,25.2 146.2,18.0 150.0,11.7 153.8,12.6 157.7,11.4 161.5,12.3 165.4,9.9 169.2,10.4 173.1,10.9 176.9,7.3 180.8,5.8 184.6,4.9 188.5,3.4 192.3,2.0 196.2,11.9 200.0,24.2 200,35"
+                         style="fill: oklch(var(--bc) / 0.15);" />
+                <polyline points="0.0,35.0 3.8,33.7 7.7,33.6 11.5,33.3 15.4,32.9 19.2,34.4 23.1,34.2 26.9,34.2 30.8,34.4 34.6,34.5 38.5,34.6 42.3,34.5 46.2,33.9 50.0,34.5 53.8,34.6 57.7,34.0 61.5,33.6 65.4,33.7 69.2,33.4 73.1,33.3 76.9,33.0 80.8,32.9 84.6,33.5 88.5,32.4 92.3,27.7 96.2,27.9 100.0,31.3 103.8,30.6 107.7,29.7 111.5,30.4 115.4,27.1 119.2,26.1 123.1,28.4 126.9,27.1 130.8,27.9 134.6,25.0 138.5,26.5 142.3,25.2 146.2,18.0 150.0,11.7 153.8,12.6 157.7,11.4 161.5,12.3 165.4,9.9 169.2,10.4 173.1,10.9 176.9,7.3 180.8,5.8 184.6,4.9 188.5,3.4 192.3,2.0 196.2,11.9 200.0,24.2"
+                          fill="none"
+                          style="stroke: oklch(var(--bc) / 0.7);"
+                              stroke-width="1.5"
+                              stroke-linejoin="round"
+                              stroke-linecap="round" />
+                    <line id="sparkline-cursor" x1="0" y1="0" x2="0" y2="35"
+                          style="stroke: oklch(var(--bc) / 0.3);"
+                          stroke-width="1"
+                          visibility="hidden" />
+                    <ellipse id="sparkline-dot" cx="0" cy="0" rx="3" ry="3"
+                            style="fill: oklch(var(--bc) / 0.8);"
+                            visibility="hidden" />
+                </svg>
+            </div>
+            <script>
+                
+                (() => {
+                    let attempts = 0;
+                    const renderSparkline = () => {
+                        if (typeof initSparkline === 'function') {
+                            initSparkline('#sparkline-container', [{"count": 0, "end": "2025-06-29", "start": "2025-06-23"}, {"count": 895, "end": "2025-07-06", "start": "2025-06-30"}, {"count": 1009, "end": "2025-07-13", "start": "2025-07-07"}, {"count": 1203, "end": "2025-07-20", "start": "2025-07-14"}, {"count": 1494, "end": "2025-07-27", "start": "2025-07-21"}, {"count": 418, "end": "2025-08-03", "start": "2025-07-28"}, {"count": 585, "end": "2025-08-10", "start": "2025-08-04"}, {"count": 582, "end": "2025-08-17", "start": "2025-08-11"}, {"count": 416, "end": "2025-08-24", "start": "2025-08-18"}, {"count": 376, "end": "2025-08-31", "start": "2025-08-25"}, {"count": 290, "end": "2025-09-07", "start": "2025-09-01"}, {"count": 345, "end": "2025-09-14", "start": "2025-09-08"}, {"count": 758, "end": "2025-09-21", "start": "2025-09-15"}, {"count": 336, "end": "2025-09-28", "start": "2025-09-22"}, {"count": 288, "end": "2025-10-05", "start": "2025-09-29"}, {"count": 686, "end": "2025-10-12", "start": "2025-10-06"}, {"count": 985, "end": "2025-10-19", "start": "2025-10-13"}, {"count": 956, "end": "2025-10-26", "start": "2025-10-20"}, {"count": 1149, "end": "2025-11-02", "start": "2025-10-27"}, {"count": 1191, "end": "2025-11-09", "start": "2025-11-03"}, {"count": 1398, "end": "2025-11-16", "start": "2025-11-10"}, {"count": 1523, "end": "2025-11-23", "start": "2025-11-17"}, {"count": 1058, "end": "2025-11-30", "start": "2025-11-24"}, {"count": 1881, "end": "2025-12-07", "start": "2025-12-01"}, {"count": 5198, "end": "2025-12-14", "start": "2025-12-08"}, {"count": 5034, "end": "2025-12-21", "start": "2025-12-15"}, {"count": 2614, "end": "2025-12-28", "start": "2025-12-22"}, {"count": 3107, "end": "2026-01-04", "start": "2025-12-29"}, {"count": 3747, "end": "2026-01-11", "start": "2026-01-05"}, {"count": 3313, "end": "2026-01-18", "start": "2026-01-12"}, {"count": 5611, "end": "2026-01-25", "start": "2026-01-19"}, {"count": 6369, "end": "2026-02-01", "start": "2026-01-26"}, {"count": 4720, "end": "2026-02-08", "start": "2026-02-02"}, {"count": 5627, "end": "2026-02-15", "start": "2026-02-09"}, {"count": 5083, "end": "2026-02-22", "start": "2026-02-16"}, {"count": 7145, "end": "2026-03-01", "start": "2026-02-23"}, {"count": 6044, "end": "2026-03-08", "start": "2026-03-02"}, {"count": 6953, "end": "2026-03-15", "start": "2026-03-09"}, {"count": 12083, "end": "2026-03-22", "start": "2026-03-16"}, {"count": 16607, "end": "2026-03-29", "start": "2026-03-23"}, {"count": 15938, "end": "2026-04-05", "start": "2026-03-30"}, {"count": 16781, "end": "2026-04-12", "start": "2026-04-06"}, {"count": 16168, "end": "2026-04-19", "start": "2026-04-13"}, {"count": 17887, "end": "2026-04-26", "start": "2026-04-20"}, {"count": 17542, "end": "2026-05-03", "start": "2026-04-27"}, {"count": 17205, "end": "2026-05-10", "start": "2026-05-04"}, {"count": 19738, "end": "2026-05-17", "start": "2026-05-11"}, {"count": 20787, "end": "2026-05-24", "start": "2026-05-18"}, {"count": 21432, "end": "2026-05-31", "start": "2026-05-25"}, {"count": 22540, "end": "2026-06-07", "start": "2026-06-01"}, {"count": 23512, "end": "2026-06-14", "start": "2026-06-08"}, {"count": 16481, "end": "2026-06-21", "start": "2026-06-15"}, {"count": 7716, "end": "2026-06-28", "start": "2026-06-22"}]);
+                        } else if (attempts++ < 40) {
+                            setTimeout(renderSparkline, 50);
+                        }
+                    };
+                    renderSparkline();
+                })();
+            </script>
+        </li>
+        
+        <li class="flex items-center">
+            <div>
+                <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                    <title>Downloaded this version</title>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 15 4 L 15 20.5625 L 9.71875 15.28125 L 8.28125 16.71875 L 15.28125 23.71875 L 16 24.40625 L 16.71875 23.71875 L 23.71875 16.71875 L 22.28125 15.28125 L 17 20.5625 L 17 4 Z M 7 26 L 7 28 L 25 28 L 25 26 Z"/></svg>
+
+                </svg>
+            </div>
+            <div class="font-normal mx-2">
+                This version: 27.9k  times
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="mb-2">
+    <h4 class="font-semibold pb-2">Badge</h4>
+    <div>
+        <img src="/components/espressif/esp_hosted/badge.svg"
+             alt="espressif/esp_hosted version: 2.12.9" />
+        <section class="flex items-center mt-2">
+            <div class="tooltip tooltip-copied" data-tip="Copy to Clipboard">
+                <button class="link link-hover-red"
+                        onclick="copy_html_badge()"
+                        title="Copy HTML badge">HTML</button>
+            </div>
+            <span class="px-2">|</span>
+            <div class="tooltip tooltip-copied" data-tip="Copy to Clipboard">
+                <button class="link link-hover-red"
+                        onclick="copy_markdown_badge()"
+                        title="Copy markdown badge">Markdown</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+    <div class="mb-2">
+        <a href="mailto:components@espressif.com?subject=Report Abuse - espressif/esp_hosted v2.12.9"
+           class="link link-hover-red text-sm"
+           target="_blank">report abuse</a>
+    </div>
+
+            </div>
+        </div>
+    </div>
+
+        </div>
+        <footer class="footer flex mt-auto items-center justify-between p-4 text-center md:p-6">
+            <aside>
+                <p>
+                    © 2020-2026 <a href="https://espressif.com/" class="link link-hover-red">Espressif Systems</a>
+                </p>
+            </aside>
+            <nav class="grid grid-flow-col gap-4">
+                <a href="/pages/cookie_policy"
+                   class="link link-hover">Cookie Policy</a>
+                <a href="/pages/terms"
+                   class="link link-hover">Terms of use</a>
+                <a href="/pages/policy"
+                   class="link link-hover">Privacy Policy</a>
+                
+                    <a href="https://status.espressif.com/status/components"
+                       class="link link-hover">Status</a>
+                
+            </nav>
+        </footer>
+        <script>
+            
+            // Session Utilities
+            function getUiSessionId() {
+                let id = localStorage.getItem("ui_session_id");
+                if (id) return id;
+
+                const params = new URLSearchParams(window.location.search);
+                const fromUrl = params.get("session_id");
+                if (fromUrl) {
+                    localStorage.setItem("ui_session_id", fromUrl);
+                    return fromUrl;
+                }
+
+                return null;
+            }
+
+            function clearUiSessionId() {
+                localStorage.removeItem("ui_session_id");
+                location.reload();
+            }
+
+            var uiSessionId = getUiSessionId();
+
+            // Common function to dynamically load WebSocket client
+            function initComponentWebSocket(config) {
+                if (!uiSessionId) return;
+
+                // Ensure WebSocket bundle is loaded (once)
+                if (!window.webSocketClientLoaded) {
+                    const script = document.createElement("script");
+                    script.src = "https://djzegpl1r7m11.cloudfront.net/scripts/webSocketClient.bundle-6e90770321099f033b38c0a8a72427a9.js";
+                    script.onload = () => {
+                        window.webSocketClientLoaded = true;
+                        setupClient();
+                    };
+                    document.body.appendChild(script);
+                } else {
+                    setupClient();
+                }
+
+                function setupClient() {
+                    // Drop the connection from the previous page (Turbo keeps the session alive)
+                    if (window.activeWebSocketClient) {
+                        window.activeWebSocketClient.disconnect();
+                    }
+
+                    const client = new webSocketClient.ComponentRegistryWebSocketClient({
+                        webSocketUrl: config.webSocketUrl,
+                        registryUrl: config.registryUrl,
+                        buttonId: config.buttonId,
+                        spinnerId: config.spinnerId,
+                        flashAfterId: config.flashAfterId,
+                        session_id: uiSessionId
+                    });
+                    window.activeWebSocketClient = client;
+
+                    if (config.onClick) {
+                        const button = document.getElementById(config.buttonId);
+                        button.addEventListener("click", config.onClick.bind(null, client));
+                    }
+
+                    return client;
+                }
+            }
+
+            function removeToast(event) {
+                const parent = event.parentNode;
+                parent.parentNode.removeChild(parent)
+            }
+
+            function createTooltip(codeBlock) {
+                const div = document.createElement('div');
+                div.setAttribute('data-tip', 'Copy code');
+                div.classList = "tooltip tooltip-left tooltip-copied";
+                const button = document.createElement('button');
+                button.innerHTML = `<svg class="fill-current w-4 h-4" viewBox="0 0 32 32"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 4 4 L 4 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 4 Z M 12 8 L 12 28 L 28 28 L 28 8 Z M 14 10 L 26 10 L 26 26 L 14 26 Z"/></svg>
+</svg>`;
+                button.addEventListener('click', () => {
+                    navigator.clipboard.writeText(codeBlock.textContent);
+                });
+
+                div.append(button);
+                return div;
+            }
+
+            function createCodeblockHeader(codeBlock, tooltipButton) {
+                const header = document.createElement('div');
+                header.className = 'flex justify-between items-center join-item codeblock-header';
+                header.style.padding = '0rem 1rem';
+
+                let language = 'plaintext';
+                const languageClassName = Array.from(codeBlock.classList).find(className => className.startsWith('language-'));
+
+                if (languageClassName) {
+                    language = languageClassName.split('-')[1];
+                }
+
+                header.innerHTML = `<p class="text-sm font-medium" style="margin:10px">${capitalizeFirstLetter(language)}</p>`;
+                header.append(tooltipButton);
+
+                return header;
+            }
+
+            function mobileMenuClick(event) {
+                const menu = event.nextElementSibling;
+                menu.classList.toggle('hidden');
+            }
+
+            function capitalizeFirstLetter(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Hide all the markdown tags until they are rendered dynamically
+            document.querySelectorAll('.markdown').forEach((tag) => {
+                tag.style.display = 'none';
+            });
+
+            // Per-page initialization, runs on the initial load and after every Turbo visit
+            function initPageContent() {
+                if (uiSessionId) {
+                    const clearBtn = document.getElementById("clear-session-btn");
+                    if (clearBtn) {
+                        clearBtn.style.display = "inline-block";
+                        clearBtn.addEventListener("click", clearUiSessionId);
+                    }
+                }
+
+                // Sync the theme switcher with the current theme
+                const switcher = document.querySelector("input[name='mode-switcher']");
+                switcher.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+
+                switcher.addEventListener("change", (e) => {
+                    toggleDarkMode(e.target.checked)
+                });
+
+                // Load markdown after loading defer scripts
+                (async () => {
+                    const promises = [];
+                    // Convert all tags containing markdown to HTML and display them
+                    for (const tag of document.querySelectorAll('.markdown')) {
+                        const repository_commit_https = tag.getAttribute('repository_commit_https');
+                        const htmlContent = await md.markdownToHTML(tag.innerHTML, repository_commit_https);
+                        const newDiv = document.createElement('div');
+                        newDiv.innerHTML = htmlContent;
+                        [...tag.attributes].forEach(attr => {
+                            newDiv.setAttribute(attr.nodeName, attr.nodeValue)
+                        });
+                        newDiv.classList.remove('whitespace-pre-wrap');
+                        newDiv.style.display = 'block';
+                        tag.parentNode.replaceChild(newDiv, tag);
+                    }
+
+                    await Promise.all(promises); // Wait for all the promises to resolve before proceeding
+                    md.render_mermaid(); // Render mermaid diagrams
+
+                    // Create copy to clipboard buttons for all code blocks
+                    document.querySelectorAll('pre code').forEach((codeBlock, index) => {
+                        const tooltip_button = createTooltip(codeBlock);
+                        const header = createCodeblockHeader(codeBlock, tooltip_button);
+
+                        codeBlock.id = `codeblock-${index}`;
+                        const pre = codeBlock.parentNode;
+                        pre.className = 'join-item p-0 codeblock';
+                        pre.style.padding = '0.5em 1em';
+
+                        const join_div = document.createElement('div');
+                        join_div.className = 'block join join-vertical overflow-hidden';
+                        pre.parentNode.insertBefore(join_div, pre)
+                        join_div.appendChild(header);
+                        join_div.appendChild(pre);
+                    });
+
+                    document.querySelectorAll('div.tooltip-copied').forEach((elem) => {
+                        const message = elem.getAttribute('data-tip')
+                        elem.onclick = function() {
+                            elem.setAttribute('data-tip', 'Copied!')
+                        }
+                        elem.onmouseout = function() {
+                            elem.setAttribute('data-tip', message)
+                        }
+                    })
+
+                    // Hide loading dots when the rendered markdown has been appended to the DOM
+                    const loading = document.getElementById('spinner-container');
+                    if (loading) {
+                        loading.style.display = 'none';
+                    }
+
+                    // Scroll to anchor element(if any) when page is loaded
+                    // Manual scrolling is needed because the page content is loaded dynamically
+                    md.scrollToAnchorElement();
+                })();
+
+                // Open first example if exists
+                const first_example = document.querySelector('div.collapse');
+                if (first_example !== null) {
+                    const input_example = first_example.querySelector(':scope > input');
+                    input_example.checked = true;
+                }
+            }
+
+            // Register once: turbo:load fires after the initial page load and after every Turbo visit
+            if (!window.pageInitListenerBound) {
+                window.pageInitListenerBound = true;
+                document.addEventListener('turbo:load', () => initPageContent());
+                // Fallback for the initial page load in case Turbo is not available
+                window.addEventListener('load', () => {
+                    if (!window.Turbo) {
+                        initPageContent();
+                    }
+                });
+            }
+        </script>
+        
+    <script>
+        if (uiSessionId) {
+            document.getElementById("add-dependency-wrapper").style.display = "block";
+            document.getElementById("cli-fallback").style.display = "none";
+
+            initComponentWebSocket({
+                webSocketUrl: "http://localhost:5001",
+                registryUrl: "https://components.espressif.com",
+                buttonId: "add-dependency-btn",
+                spinnerId: "add-dependency-spinner",
+                flashAfterId: "add-dependency-btn",
+                onClick: (client) => {
+                    client.addDependency("espressif", "esp_hosted", "2.12.9");
+                }
+            });
+        }
+    </script>
+
+    </body>
+</html>

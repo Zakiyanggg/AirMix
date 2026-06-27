@@ -36,7 +36,8 @@
   "idf.flashType": "UART",
   "idf.currentSetup": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
   "idf.customExtraVars": {
-    "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env"
+    "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env",
+    "IDF_TARGET": "esp32"
   },
   "idf.pythonInstallPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
   "idf.espIdfPath": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
@@ -45,7 +46,8 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=${workspaceFolder}/build"
+    "--compile-commands-dir=/Users/ziyiyang/Desktop/AirMix/projects/esp32-a2dp/build-esp32"
   ],
-  "idf.port": "/dev/tty.usbserial-210"
+  "idf.buildPath": "${workspaceFolder}/build-esp32",
+  "idf.port": "/dev/cu.usbserial-110"
 }

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+    <head>
+        <script defer data-domain="components.espressif.com" src="https://plausible.espressif.tools/js/script.file-downloads.hash.outbound-links.tagged-events.js"></script>
+        <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+        <script>
+            // Move theme toggler to the header to fix theme flicking
+            function toggleDarkMode(checked) {
+                const theme = checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+            }
+
+            let theme = localStorage.getItem('theme');
+            if (theme === null) {
+                // Check the system theme
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+            }
+            const is_theme_dark = theme === 'dark';
+            toggleDarkMode(is_theme_dark);
+        </script>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <meta name="turbo-cache-control" content="no-cache">
+        <meta name="description" content="ESP Component Registry" />
+        <meta name="keywords"
+              content="ESP-IDF, Component Manager, Embedded, Components" />
+        <meta property="og:image"
+              content="http://components.espressif.com/static/registry_logo-304669f60b82f3fa014db12491b4a39d.jpg" />
+        <meta name="title" property="og:title" content="
+    espressif/esp_hosted - 2.12.9 - Example slave
+•
+    ESP Component Registry">
+        <meta name="description"
+              property="og:description"
+              content="
+    slave example of component espressif/esp_hosted - 2.12.9
+">
+        <title>
+    espressif/esp_hosted - 2.12.9 - Example slave
+•
+    ESP Component Registry</title>
+        <link rel="icon"
+              href="https://djzegpl1r7m11.cloudfront.net/favicon-d2a5cd9740d9e966b3b775d84b599d91.ico" />
+        <link rel="preload"
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+              href="https://djzegpl1r7m11.cloudfront.net/fonts/inter/InterVariable-2bf3d951bf9d6109437ea0874bbf12fb.woff2" />
+        <link rel="preload"
+              as="font"
+              type="font/woff2"
+              crossorigin="anonymous"
+              href="https://djzegpl1r7m11.cloudfront.net/fonts/jetbrains-mono/JetBrainsMono-Variable-b058178d7f309414f8f856b99fd80d9b.woff2" />
+        <link rel="stylesheet"
+              data-turbo-track="reload"
+              href="https://djzegpl1r7m11.cloudfront.net/styles/style-b0dcb396cd5874a3174dc68cb497197e.css" />
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/turbo.bundle-b6b42a4505872a289832c9377e846ec6.js"
+                data-turbo-track="reload"
+                defer></script>
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/md.bundle-5f0bc042a5e01ae3aad59a996a51d389.js"
+                data-turbo-track="reload"
+                defer></script>
+        <script src="https://djzegpl1r7m11.cloudfront.net/scripts/enhancedSearch.bundle-15ed705523f4711d0af4a73531d660b3.js"
+                data-turbo-track="reload"
+                defer></script>
+        
+    <script>
+        function createProjectFromExample(example) {
+            if (window && window.parent && window.parent.postMessage) {
+                window.parent.postMessage({
+                        message: "create-project-from-example",
+                        example: example,
+                    },
+                    "*"
+                );
+            }
+        }
+    </script>
+    <script>
+        async function copyToClipboard(elementId) {
+            await navigator.clipboard.writeText(document.getElementById(elementId).innerHTML.trim());
+        }
+    </script>
+
+    </head>
+    <body class="min-h-screen bg-base-200 flex flex-col">
+        
+        <nav>
+            <div class="w-11/12 flex flex-wrap items-center justify-between mx-auto pt-6">
+                <a href="/"
+                   class="cursor-pointer flex items-center shrink-0 text-logo">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+     id="_图层_1"
+     viewBox="107.32 65.82 585.36 156.5"
+     width="170px"
+     height="45px"
+     class="fill-current">
+    <title>ESP Component Registry</title>
+    <defs>
+    <style>.cls-1{fill:#e7352c;}</style>
+    </defs>
+    <g>
+    <polygon points="122.04 151.52 149.21 151.52 149.21 139.68 122.04 139.68 122.04 125.33 150.28 125.33 150.28 113.3 107.32 113.3 107.32 183.07 150.48 183.07 150.48 171.04 122.04 171.04 122.04 151.52" />
+    <path d="M190.99,141.06c-10.01-4.07-13.14-6.38-13.14-10.18s3.63-6.85,8.83-6.85c5.49,0,9.32,2.5,12.36,6.75l9.42-7.96c-4.71-6.57-12.06-10.83-22.36-10.83-13.44,0-23.15,8.33-23.15,19.34s7.16,15.45,19.22,20.36c10.01,4.07,12.75,6.94,12.75,12.03s-3.63,8.61-9.81,8.61-11.77-3.24-15.5-10.09l-10.1,7.13c4.22,8.79,13.34,14.99,26.29,14.99,13.73,0,24.13-8.24,24.13-20.82,0-11.38-5.79-17.3-18.93-22.49Z" />
+    <path d="M239.05,113.3h-17.75v69.77h14.71v-26.37h5.89c15.5,0,26.29-7.96,26.29-21.84,0-15.73-11.87-21.56-29.13-21.56Zm.98,31.55h-4.02v-19.62h3.63c9.12,0,14.13,2.96,14.13,9.62s-4.81,9.99-13.73,9.99Z" />
+    <path d="M443.21,131.68c-12.53,0-21.45,9.01-21.45,22.88s8.92,22.71,21.88,22.71c8.92,0,16.39-4.07,20.16-12.1l-10.9-3.71c-2.32,4.24-5.06,6.18-9.09,6.18-5.75,0-9.01-4.15-9.44-10.51h30.03v-2.3c0-14.4-8.24-23.15-21.19-23.15Zm-8.32,17.05c.94-4.42,3.95-7.42,8.49-7.42s7.81,2.74,8.41,7.42h-16.9Z" />
+    <path d="M503.09,137.69h-.09c-3.95-4.24-8.07-5.92-13.3-5.92-11.07,0-18.88,9.98-18.88,22.35s7.81,22.44,18.96,22.44c5.41,0,9.52-2.12,13.38-6.36h.09v5.83c0,8.22-3.69,12.37-10.29,12.37-5.92,0-8.84-2.39-9.87-7.86l-11.5,.71c.94,11.4,9.09,17.14,21.53,17.14,14.33,0,22.22-8.3,22.22-23.94v-41.61h-12.27v4.86Zm-9.7,28.54c-6.18,0-10.04-5.04-10.04-11.93s4.12-11.66,10.12-11.66,10.21,5.04,10.21,11.75-4.2,11.84-10.3,11.84Z" />
+    <rect x="526.51" y="132.83" width="12.44" height="43.21" />
+    <path class="cls-1" d="M532.6,114.4c-4.2,0-7.55,3.18-7.55,7.33,0,4.42,3.43,7.51,7.63,7.51s7.64-3.09,7.64-7.51-3.43-7.33-7.72-7.33Z" />
+    <path d="M567.43,149.71c-6.35-2.65-7.89-3.62-7.89-5.39,0-1.59,1.37-2.65,3.78-2.65,2.57,0,5.32,1.5,6.95,3.27l6.52-7.69c-2.83-3.36-7.72-5.57-13.9-5.57-8.15,0-15.01,4.68-15.01,13.08,0,6.36,3.6,10.07,10.73,12.9,5.83,2.56,7.46,3.62,7.46,5.92s-1.54,3.45-4.46,3.45c-3.6,0-6.44-1.94-8.67-5.04l-7.04,7.51c2.75,4.06,8.07,7.78,16.22,7.78,9.27,0,15.87-5.48,15.87-14.4,0-6.54-3.17-10.25-10.55-13.17Z" />
+    <polygon points="600.12 117.55 587.68 117.55 587.68 132.83 580.99 132.83 580.99 144.14 587.68 144.14 587.68 176.04 600.12 176.04 600.12 144.14 607.58 144.14 607.58 132.83 600.12 132.83 600.12 117.55" />
+    <path d="M626.8,137.25h-.26l.17-4.42h-12.44v43.21h12.44v-20.94c0-7.42,2.66-11.31,7.72-11.31,2.15,0,3.95,.79,5.75,2.12l3.35-12.28c-2.23-1.24-4.38-1.94-6.26-1.94-4.63,0-7.29,1.59-10.47,5.57Z" />
+    <polygon points="679.04 132.5 668.48 157.06 657.5 132.5 643.52 132.5 662.13 168.2 647.21 197.79 660.93 197.79 692.68 132.5 679.04 132.5" />
+    </g>
+    <g>
+    <path class="cls-1" d="M409.35,196.98c-13.28,12.87-31.36,20.82-51.27,20.82-40.66,0-73.73-33.08-73.73-73.73s33.08-73.73,73.73-73.73c19.92,0,38.01,7.95,51.29,20.84,.87-1.25,2.01-2.29,3.35-3.04-14.11-13.79-33.4-22.32-54.64-22.32-43.15,0-78.25,35.1-78.25,78.25s35.1,78.25,78.25,78.25c21.23,0,40.5-8.51,54.61-22.28-1.33-.75-2.48-1.8-3.34-3.05Z" />
+    <path class="cls-1" d="M410.08,96.85c0,4.14,3.35,7.49,7.49,7.49s7.49-3.35,7.49-7.49-3.35-7.49-7.49-7.49-7.49,3.35-7.49,7.49Z" />
+    <path class="cls-1" d="M417.58,183.84c-4.14,0-7.49,3.35-7.49,7.49s3.35,7.49,7.49,7.49,7.49-3.35,7.49-7.49-3.35-7.49-7.49-7.49Z" />
+    <path class="cls-1" d="M358.08,200.37c8.04,0,15.69-1.7,22.61-4.74v-14.18h14.6l2.57,2.45c10.21-10.19,16.52-24.28,16.52-39.85,0-31.1-25.21-56.31-56.31-56.31s-56.31,25.21-56.31,56.31c0,18.53,8.95,34.96,22.76,45.22v-7.83h17.99v16.72c4.94,1.42,10.16,2.19,15.56,2.19Zm-.2-40.03v1.68h-14.63v-17.99h17.99v16.32h-3.37Zm-15.62-41.78v-5.93h1.27v5.93h-1.27Zm16.43,42.54h5.93v.92h-5.93v-.92Zm21.28,34.27l-13.9-13.9h13.9v13.9Zm0-14.64h-14.6l-3.39-3.23v-14.76h17.99v17.99Zm.69,.05v-13.9l13.9,13.9h-13.9Zm-.97-24.79v-5.93h1.27v5.93h-1.27Zm19.01,2.64l-3.23,3.39h-14.76v-5.27h.96v-7.46h-.96v-5.27h16.33v3.37h1.67v11.23Zm0-12.01h-.92v-5.93h.92v5.93Zm0-18.07v11.4h-1.67v3.37h-16.33v-17.99h14.6l3.39,3.23Zm-18.01-17.85l13.9,13.9h-13.9v-13.9Zm-18.71-4.09h14.6l3.39,3.23v14.76h-17.99v-17.99Zm0,37.42h17.99v5.27h-.97v7.46h.97v5.27h-14.63v-1.68h-3.36v-16.32Zm-18.72-37.42h17.99v17.99h-17.99v-5.35h.97v-7.46h-.97v-5.19Zm-18.73,3.23l3.39-3.23h14.6v5.19h-.96v7.46h.96v5.35h-17.99v-14.76Zm0,15.48h17.99v17.99h-16.32v-3.29h-1.67v-14.7Zm0,15.38h.92v5.93h-.92v-5.93Zm0,6.63h1.67v-3.3h16.32v14.71h-1.66v3.28h-16.33v-14.7Zm17.97,12.1v5.93h-.92v-5.93h.92Zm-17.97,21.31v-17.99h16.33v3.3h1.66v14.69h-17.99Z" />
+    </g>
+</svg>
+                </a>
+                <button class="btn btn-outline border-gray bg-base-100 background-hover highlight-hover btn-sm md:hidden"
+                        onclick="mobileMenuClick(this)">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6"
+                         aria-hidden="true"
+                         fill="currentColor"
+                         viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto">
+                    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 items-center justify-center gap-4 md:gap-0">
+                        <li>
+                            <a href="https://docs.espressif.com/projects/idf-component-manager/"
+                               target="_blank"
+                               class="link link-hover">Docs</a>
+                        </li>
+                        <li>
+                            <a href="https://developer.espressif.com/tags/component/"
+                               target="_blank"
+                               class="link link-hover">Blog</a>
+                        </li>
+                        
+                            <li>
+                                <a href="/users/login" class="link link-hover">Sign in</a>
+                            </li>
+                        
+                        <li>
+                            <label class="flex cursor-pointer gap-2">
+                                
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 32 32"
+                                     class="fill-current w-5 h-5 mr-1">
+                                    <path d="M 15 3 L 15 8 L 17 8 L 17 3 Z M 7.5 6.09375 L 6.09375 7.5 L 9.625 11.0625 L 11.0625 9.625 Z M 24.5 6.09375 L 20.9375 9.625 L 22.375 11.0625 L 25.90625 7.5 Z M 16 9 C 12.144531 9 9 12.144531 9 16 C 9 19.855469 12.144531 23 16 23 C 19.855469 23 23 19.855469 23 16 C 23 12.144531 19.855469 9 16 9 Z M 16 11 C 18.773438 11 21 13.226563 21 16 C 21 18.773438 18.773438 21 16 21 C 13.226563 21 11 18.773438 11 16 C 11 13.226563 13.226563 11 16 11 Z M 3 15 L 3 17 L 8 17 L 8 15 Z M 24 15 L 24 17 L 29 17 L 29 15 Z M 9.625 20.9375 L 6.09375 24.5 L 7.5 25.90625 L 11.0625 22.375 Z M 22.375 20.9375 L 20.9375 22.375 L 24.5 25.90625 L 25.90625 24.5 Z M 15 24 L 15 29 L 17 29 L 17 24 Z" />
+                                </svg>
+                                <input type="checkbox"
+                                       name="mode-switcher"
+                                       class="toggle border-gray highlight-animation highlight-hover" />
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 32 32"
+                                     class="fill-current w-5 h-5 ml-1">
+                                    <path d="M 5 5 L 5 7 L 3 7 L 3 9 L 5 9 L 5 11 L 7 11 L 7 9 L 9 9 L 9 7 L 7 7 L 7 5 Z M 20.28125 7.9375 L 18.625 8 C 13.28125 8.191406 9 12.578125 9 17.96875 C 9 23.480469 13.488281 27.96875 19 27.96875 C 24.390625 27.96875 28.777344 23.6875 28.96875 18.34375 L 29.03125 16.71875 L 27.5625 17.40625 C 26.78125 17.777344 25.914063 17.96875 25 17.96875 C 21.675781 17.96875 19 15.292969 19 11.96875 C 19 11.054688 19.222656 10.21875 19.59375 9.4375 Z M 17.375 10.3125 C 17.25 10.867188 17 11.375 17 11.96875 C 17 16.375 20.59375 19.96875 25 19.96875 C 25.605469 19.96875 26.121094 19.722656 26.6875 19.59375 C 25.925781 23.21875 22.859375 25.96875 19 25.96875 C 14.570313 25.96875 11 22.398438 11 17.96875 C 11 14.117188 13.757813 11.082031 17.375 10.3125 Z" />
+                                </svg>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header>
+            
+            
+        </header>
+        <div class="toast z-50">
+            
+        </div>
+        <div class="mb-8">
+            
+    <div class="container w-11/12 mx-auto mt-10 ">
+        
+    <div class="rounded px-5 md:px-10 py-2 md:pt-5">
+        <div class="flex flex-col md:items-center md:flex-row md:whitespace-nowrap mt-2">
+            <h1 class="pb-2 font-semibold text-3xl">slave</h1>
+            
+        </div>
+        <div class="text-sm text-base-content/60">
+            Example of the component
+            <a class="link link-hover-red"
+               href="/components/espressif/esp_hosted/versions/2.12.9/readme?language=en">
+                espressif/esp_hosted v2.12.9
+            </a>
+        </div>
+    </div>
+
+        <div class="flex flex-col-reverse md:flex-row mt-4 w-full px-5 md:px-0">
+            <div class="md:basis-2/3 px-5 md:px-10 md:w-0">
+                <div id="spinner-container"
+                     class="absolute left-1/2 z-10 pointer-events-none">
+                    <div class="loading loading-spinner loading-lg text-secondary"></div>
+                </div>
+                
+                    
+                    
+                        
+                            <pre class="prose max-w-full mb-5 md:mb-10 markdown whitespace-pre-wrap" repository_commit_https="https://github.com/espressif/esp-hosted-mcu/tree/09d9e983c9fc9d425d106177110165a89072533a/."># ESP-Hosted-MCU Slave example
+
+This document details the **ESP-Hosted MCU Slave Example**, demonstrating the slave firmware that provides Wi-Fi and Bluetooth connectivity to host MCUs via ESP32 series co-processors.
+
+## Overview
+
+The slave firmware enables host MCUs to utilize the Wi-Fi and Bluetooth capabilities of ESP32 series chips through **SDIO, SPI, or UART** interfaces. This minimal example focuses on basic connectivity; however, advanced features like Network Split and Host Power Save can be optionally configured for optimized network traffic and power management.
+
+## Supported Co-processors and Transports
+
+The following table summarizes the supported co-processors and transport communication buses between the slave and host. This example specifically utilizes **SDIO** as the transport and **ESP32-C6** as the slave co-processor.
+
+| Transport Supported | SDIO | SPI Full-Duplex | SPI Half-Duplex | UART |
+|---|:---:|:---:|:---:|:---:|
+| **Co-Processors Supported** | | | | |
+| ESP32 | ✓ | ✓ | × | ✓ |
+| ESP32-C2 | × | ✓ | ✓ | ✓ |
+| ESP32-C3 | × | ✓ | ✓ | ✓ |
+| ESP32-C5 | ✓ | ✓ | ✓ | ✓ |
+| ESP32-C6/C61 | ✓ | ✓ | ✓ | ✓ |
+| ESP32-S2 | × | ✓ | ✓ | ✓ |
+| ESP32-S3 | × | ✓ | ✓ | ✓ |
+
+
+## Example Hardware Connections
+
+This example uses the SDIO interface. The default SDIO pin connections for the ESP32-C6 slave are as follows:
+
+### SDIO Interface (Default for ESP32-P4-Function-EV-Board)
+
+| Signal | GPIO | Notes |
+|:-------|:-----|:------------|
+| CLK | 19 | Clock |
+| CMD | 18 | Command |
+| D0 | 20 | Data 0 |
+| D1 | 21 | Data 1 |
+| D2 | 22 | Data 2 |
+| D3 | 23 | Data 3 |
+| Reset | EN | Reset input |
+
+For detailed SDIO hardware connection requirements, refer to the official documentation at [https://github.com/espressif/esp-hosted-mcu/blob/main/docs/sdio.md\#3-hardware-considerations](https://github.com/espressif/esp-hosted-mcu/blob/main/docs/sdio.md#3-hardware-considerations). The GPIO pins and transport can be configured as explained in later sections.
+
+
+## Quick Start Guide
+
+### 1. Obtain the Slave Example
+
+Execute the following commands to retrieve the slave example:
+
+```bash
+idf.py create-project-from-example &#34;espressif/esp_hosted:slave&#34;
+cd slave
+```
+
+### 2. Set Up ESP-IDF
+
+It is presumed that ESP-IDF has already been set up. If not, please proceed with the setup using one of the following options:
+
+#### Option 1: Installer Way
+
+  * **Windows**
+
+      * Install and set up ESP-IDF on Windows as documented in the [Standard Setup of Toolchain for Windows](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html).
+      * Use the ESP-IDF [Powershell Command Prompt](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html#using-the-command-prompt) for subsequent commands.
+
+  * **Linux or macOS**
+
+      * For bash:
+        ```bash
+        bash docs/setup_esp_idf__latest_stable__linux_macos.sh
+        ```
+      * For fish:
+        ```fish
+        fish docs/setup_esp_idf__latest_stable__linux_macos.fish
+        ```
+
+#### Option 2: Manual Way
+
+Please follow the [ESP-IDF Get Started Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/index.html) for manual installation.
+
+### 3. Set Target
+
+Set the target co-processor using the command below:
+
+```bash
+idf.py set-target esp32c6
+```
+
+&gt; [!TIP]
+&gt; You can **customize** the target co-processor by replacing `esp32c6` with your desired ESP32 series chip.
+
+### 4. Customizing Configuration: Transport and Features
+
+This is optional step. By default, SDIO transport is pre-configured.
+
+You can access the configuration menu to choose desired configuration and features using:
+
+```bash
+idf.py menuconfig
+```
+
+The default configuration tree looks like this:
+```
+Example Configuration
+└── Bus Config in between Host and Co-processor
+    └── Transport layer
+        └── Select transport: SDIO/SPI-Full-Duplex/SPI-Half-Duplex/UART
+    └── &lt;Other optional features&gt;
+```
+
+
+&gt; [!TIP]
+&gt; You can optionally **customize** the transport layer (SDIO, SPI Full-Duplex, SPI Half-Duplex, or UART), their GPIOs in use and other optional features within this menu.
+
+### 5. Build and Flash
+
+Build and flash the firmware to your device using the commands below, replacing `&lt;SERIAL_PORT&gt;` with your device&#39;s serial port:
+
+```bash
+idf.py build
+idf.py -p &lt;SERIAL_PORT&gt; flash monitor
+```
+
+&gt; [!TIP]
+&gt; You can **customize** the serial port (`&lt;SERIAL_PORT&gt;`) to match your specific hardware connection.
+
+
+## References
+
+- [ESP-Hosted MCU Documentation](../../README.md)
+- [ESP32-P4-Function-EV-Board Setup](../../docs/esp32_p4_function_ev_board.md)
+- [Transport Layer Documentation](../../docs/)
+- [Troubleshooting Guide](../../docs/troubleshooting.md)
+</pre>
+                        
+                    
+                
+            </div>
+            <div class="flex flex-col md:basis-1/3 pl-0 md:pl-12 pr-5 md:pr-10">
+                
+                
+                    <p>To create a project from this example, run:</p>
+                
+                <div class="bg-base-100 rounded p-4 my-1 border border-gray">
+                    <div class="tooltip tooltip-copied float-right z-10"
+                         data-tip="Copy to Clipboard">
+                        <button onclick="copyToClipboard('example_code_0875b03b-182b-4ac1-bf7c-8152f23c4d6a')">
+                            <svg class="fill-current w-4 h-4" viewBox="0 0 32 32">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 4 4 L 4 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 4 Z M 12 8 L 12 28 L 28 28 L 28 8 Z M 14 10 L 26 10 L 26 26 L 14 26 Z"/></svg>
+
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="example_code_0875b03b-182b-4ac1-bf7c-8152f23c4d6a" class="break-all">
+                        idf.py create-project-from-example "espressif/esp_hosted=2.12.9:slave"
+                    </p>
+                </div>
+                <div>
+                    or
+                    <a href="/api/downloads/?object_type=example&amp;object_id=0875b03b-182b-4ac1-bf7c-8152f23c4d6a"
+                       class="link link-hover-red"
+                       target="_blank">download archive</a>
+                    (~497.28 KB)
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+        <footer class="footer flex mt-auto items-center justify-between p-4 text-center md:p-6">
+            <aside>
+                <p>
+                    © 2020-2026 <a href="https://espressif.com/" class="link link-hover-red">Espressif Systems</a>
+                </p>
+            </aside>
+            <nav class="grid grid-flow-col gap-4">
+                <a href="/pages/cookie_policy"
+                   class="link link-hover">Cookie Policy</a>
+                <a href="/pages/terms"
+                   class="link link-hover">Terms of use</a>
+                <a href="/pages/policy"
+                   class="link link-hover">Privacy Policy</a>
+                
+                    <a href="https://status.espressif.com/status/components"
+                       class="link link-hover">Status</a>
+                
+            </nav>
+        </footer>
+        <script>
+            
+            // Session Utilities
+            function getUiSessionId() {
+                let id = localStorage.getItem("ui_session_id");
+                if (id) return id;
+
+                const params = new URLSearchParams(window.location.search);
+                const fromUrl = params.get("session_id");
+                if (fromUrl) {
+                    localStorage.setItem("ui_session_id", fromUrl);
+                    return fromUrl;
+                }
+
+                return null;
+            }
+
+            function clearUiSessionId() {
+                localStorage.removeItem("ui_session_id");
+                location.reload();
+            }
+
+            var uiSessionId = getUiSessionId();
+
+            // Common function to dynamically load WebSocket client
+            function initComponentWebSocket(config) {
+                if (!uiSessionId) return;
+
+                // Ensure WebSocket bundle is loaded (once)
+                if (!window.webSocketClientLoaded) {
+                    const script = document.createElement("script");
+                    script.src = "https://djzegpl1r7m11.cloudfront.net/scripts/webSocketClient.bundle-6e90770321099f033b38c0a8a72427a9.js";
+                    script.onload = () => {
+                        window.webSocketClientLoaded = true;
+                        setupClient();
+                    };
+                    document.body.appendChild(script);
+                } else {
+                    setupClient();
+                }
+
+                function setupClient() {
+                    // Drop the connection from the previous page (Turbo keeps the session alive)
+                    if (window.activeWebSocketClient) {
+                        window.activeWebSocketClient.disconnect();
+                    }
+
+                    const client = new webSocketClient.ComponentRegistryWebSocketClient({
+                        webSocketUrl: config.webSocketUrl,
+                        registryUrl: config.registryUrl,
+                        buttonId: config.buttonId,
+                        spinnerId: config.spinnerId,
+                        flashAfterId: config.flashAfterId,
+                        session_id: uiSessionId
+                    });
+                    window.activeWebSocketClient = client;
+
+                    if (config.onClick) {
+                        const button = document.getElementById(config.buttonId);
+                        button.addEventListener("click", config.onClick.bind(null, client));
+                    }
+
+                    return client;
+                }
+            }
+
+            function removeToast(event) {
+                const parent = event.parentNode;
+                parent.parentNode.removeChild(parent)
+            }
+
+            function createTooltip(codeBlock) {
+                const div = document.createElement('div');
+                div.setAttribute('data-tip', 'Copy code');
+                div.classList = "tooltip tooltip-left tooltip-copied";
+                const button = document.createElement('button');
+                button.innerHTML = `<svg class="fill-current w-4 h-4" viewBox="0 0 32 32"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M 4 4 L 4 24 L 11 24 L 11 22 L 6 22 L 6 6 L 18 6 L 18 7 L 20 7 L 20 4 Z M 12 8 L 12 28 L 28 28 L 28 8 Z M 14 10 L 26 10 L 26 26 L 14 26 Z"/></svg>
+</svg>`;
+                button.addEventListener('click', () => {
+                    navigator.clipboard.writeText(codeBlock.textContent);
+                });
+
+                div.append(button);
+                return div;
+            }
+
+            function createCodeblockHeader(codeBlock, tooltipButton) {
+                const header = document.createElement('div');
+                header.className = 'flex justify-between items-center join-item codeblock-header';
+                header.style.padding = '0rem 1rem';
+
+                let language = 'plaintext';
+                const languageClassName = Array.from(codeBlock.classList).find(className => className.startsWith('language-'));
+
+                if (languageClassName) {
+                    language = languageClassName.split('-')[1];
+                }
+
+                header.innerHTML = `<p class="text-sm font-medium" style="margin:10px">${capitalizeFirstLetter(language)}</p>`;
+                header.append(tooltipButton);
+
+                return header;
+            }
+
+            function mobileMenuClick(event) {
+                const menu = event.nextElementSibling;
+                menu.classList.toggle('hidden');
+            }
+
+            function capitalizeFirstLetter(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+
+            // Hide all the markdown tags until they are rendered dynamically
+            document.querySelectorAll('.markdown').forEach((tag) => {
+                tag.style.display = 'none';
+            });
+
+            // Per-page initialization, runs on the initial load and after every Turbo visit
+            function initPageContent() {
+                if (uiSessionId) {
+                    const clearBtn = document.getElementById("clear-session-btn");
+                    if (clearBtn) {
+                        clearBtn.style.display = "inline-block";
+                        clearBtn.addEventListener("click", clearUiSessionId);
+                    }
+                }
+
+                // Sync the theme switcher with the current theme
+                const switcher = document.querySelector("input[name='mode-switcher']");
+                switcher.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+
+                switcher.addEventListener("change", (e) => {
+                    toggleDarkMode(e.target.checked)
+                });
+
+                // Load markdown after loading defer scripts
+                (async () => {
+                    const promises = [];
+                    // Convert all tags containing markdown to HTML and display them
+                    for (const tag of document.querySelectorAll('.markdown')) {
+                        const repository_commit_https = tag.getAttribute('repository_commit_https');
+                        const htmlContent = await md.markdownToHTML(tag.innerHTML, repository_commit_https);
+                        const newDiv = document.createElement('div');
+                        newDiv.innerHTML = htmlContent;
+                        [...tag.attributes].forEach(attr => {
+                            newDiv.setAttribute(attr.nodeName, attr.nodeValue)
+                        });
+                        newDiv.classList.remove('whitespace-pre-wrap');
+                        newDiv.style.display = 'block';
+                        tag.parentNode.replaceChild(newDiv, tag);
+                    }
+
+                    await Promise.all(promises); // Wait for all the promises to resolve before proceeding
+                    md.render_mermaid(); // Render mermaid diagrams
+
+                    // Create copy to clipboard buttons for all code blocks
+                    document.querySelectorAll('pre code').forEach((codeBlock, index) => {
+                        const tooltip_button = createTooltip(codeBlock);
+                        const header = createCodeblockHeader(codeBlock, tooltip_button);
+
+                        codeBlock.id = `codeblock-${index}`;
+                        const pre = codeBlock.parentNode;
+                        pre.className = 'join-item p-0 codeblock';
+                        pre.style.padding = '0.5em 1em';
+
+                        const join_div = document.createElement('div');
+                        join_div.className = 'block join join-vertical overflow-hidden';
+                        pre.parentNode.insertBefore(join_div, pre)
+                        join_div.appendChild(header);
+                        join_div.appendChild(pre);
+                    });
+
+                    document.querySelectorAll('div.tooltip-copied').forEach((elem) => {
+                        const message = elem.getAttribute('data-tip')
+                        elem.onclick = function() {
+                            elem.setAttribute('data-tip', 'Copied!')
+                        }
+                        elem.onmouseout = function() {
+                            elem.setAttribute('data-tip', message)
+                        }
+                    })
+
+                    // Hide loading dots when the rendered markdown has been appended to the DOM
+                    const loading = document.getElementById('spinner-container');
+                    if (loading) {
+                        loading.style.display = 'none';
+                    }
+
+                    // Scroll to anchor element(if any) when page is loaded
+                    // Manual scrolling is needed because the page content is loaded dynamically
+                    md.scrollToAnchorElement();
+                })();
+
+                // Open first example if exists
+                const first_example = document.querySelector('div.collapse');
+                if (first_example !== null) {
+                    const input_example = first_example.querySelector(':scope > input');
+                    input_example.checked = true;
+                }
+            }
+
+            // Register once: turbo:load fires after the initial page load and after every Turbo visit
+            if (!window.pageInitListenerBound) {
+                window.pageInitListenerBound = true;
+                document.addEventListener('turbo:load', () => initPageContent());
+                // Fallback for the initial page load in case Turbo is not available
+                window.addEventListener('load', () => {
+                    if (!window.Turbo) {
+                        initPageContent();
+                    }
+                });
+            }
+        </script>
+        
+    <script src="https://djzegpl1r7m11.cloudfront.net/scripts/webSocketClient.bundle-6e90770321099f033b38c0a8a72427a9.js"></script>
+    <script>
+        if (uiSessionId) {
+            document.getElementById("create-project-from-example-wrapper").style.display = "block";
+
+            initComponentWebSocket({
+                webSocketUrl: "http://localhost:5001",
+                registryUrl: "https://components.espressif.com",
+                buttonId: "create-project-from-example-btn",
+                spinnerId: "create-project-from-example-spinner",
+                flashAfterId: "create-project-from-example-btn",
+                onClick: (client) => {
+                    client.createProjectFromExample("espressif", "esp_hosted", "2.12.9", "slave");
+                }
+            });
+        }
+    </script>
+
+    </body>
+</html>
