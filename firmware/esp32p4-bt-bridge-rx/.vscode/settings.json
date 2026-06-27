@@ -1,0 +1,27 @@
+{
+  "idf.currentSetup": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+  "idf.espIdfPath": "/Users/ziyiyang/espressif/v6.0.1/esp-idf",
+  "idf.toolsPath": "/Users/ziyiyang/.espressif",
+  "idf.pythonInstallPath": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+  "idf.adapterTargetName": "esp32p4",
+  "idf.buildPath": "${workspaceFolder}/build-esp32p4",
+  "idf.port": "/dev/cu.usbmodem5B5E1340521",
+  "idf.flashType": "UART",
+  "idf.sdkconfigDefaults": [
+    "sdkconfig.defaults",
+    "sdkconfig.defaults.pre_v3"
+  ],
+  "idf.customExtraVars": {
+    "IDF_PYTHON_ENV_PATH": "/Users/ziyiyang/.espressif/python_env/idf6.0_py3.12_env",
+    "IDF_TARGET": "esp32p4"
+  },
+  "clangd.path": "/Users/ziyiyang/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/Users/ziyiyang/Desktop/AirMix/firmware/esp32p4-bt-bridge-rx/build-esp32p4"
+  ],
+  "idf.openOcdConfigs": [
+    "board/esp32p4-builtin.cfg"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ESP-IDF: Build (P4 v1.3)",
+      "type": "shell",
+      "command": "${config:idf.pythonInstallPath}",
+      "args": [
+        "${config:idf.espIdfPath}/tools/idf.py",
+        "-B",
+        "build-esp32p4",
+        "build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "IDF_PATH": "${config:idf.espIdfPath}"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "ESP-IDF: Flash + Monitor (P4)",
+      "type": "shell",
+      "command": "${config:idf.pythonInstallPath}",
+      "args": [
+        "${config:idf.espIdfPath}/tools/idf.py",
+        "-B",
+        "build-esp32p4",
+        "-p",
+        "/dev/cu.usbmodem5B5E1340521",
+        "flash",
+        "monitor"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "IDF_PATH": "${config:idf.espIdfPath}"
+        }
+      },
+      "problemMatcher": []
+    }
+  ]
+}

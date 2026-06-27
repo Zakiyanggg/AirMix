@@ -1,0 +1,25 @@
+menu "AirMix P4"
+
+choice AIRMIX_LCD_APP
+    prompt "LCD application mode"
+    default AIRMIX_LCD_COLORCHECKER
+
+config AIRMIX_LCD_COLORCHECKER
+    bool "ColorChecker test pattern (no camera)"
+    help
+        Draw X-Rite ColorChecker Classic on ST7789 to verify RGB565 /
+        BGR / endian / invert settings without the camera pipeline.
+
+config AIRMIX_CAMERA_PREVIEW
+    bool "Camera preview on SPI ST7789 (OV5647 link test)"
+    help
+        Live OV5647 camera on the external ST7789 SPI LCD.
+
+config AIRMIX_BT_BRIDGE
+    bool "BT audio bridge + LVGL status UI"
+    help
+        Default AirMix product path: I2S from ESP32-AUDIO to board speaker.
+
+endchoice
+
+endmenu

@@ -1,10 +1,10 @@
-# AirMix 子项目入口
+# AirMix 固件子项目入口
 
-左下角 workspace 通过**不同路径**区分固件项目（避免 Cursor 合并同名目录）：
+双板原型：ESP32（蓝牙 PCM 源）+ ESP32-P4（I2S 接收 + ES8311 播放）。
 
-| 路径 | 用途 | 刷机 |
+| 路径 | 芯片 | 用途 |
 |------|------|------|
-| `projects/esp32-bt-audio` | ESP32 蓝牙 A2DP + 小屏 | **esp32** |
-| `projects/esp32c6-display` | ESP32-C6 1.47 寸大屏 | **esp32c6** |
+| `projects/esp32-a2dp` | **esp32** | A2DP → I2S Master TX → P4 |
+| `firmware/esp32p4-bt-bridge-rx` | **esp32p4** | I2S Slave RX → ES8311 喇叭 |
 
-两者软链接到同一份源码，构建目录分别为 `build-esp32` / `build-esp32c6`。
+刷机步骤见 [`docs/esp32_p4_bt_playback.md`](../docs/esp32_p4_bt_playback.md)。

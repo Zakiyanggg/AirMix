@@ -1,4 +1,5 @@
 #include "BT_Player.h"
+#include "bt_meta_uart.h"
 
 #include <math.h>
 #include <stdbool.h>
@@ -112,6 +113,13 @@ static int16_t bt_player_render_drum_sample(bt_drum_voice_t *voice, uint32_t sam
 static bt_drum_voice_t *bt_player_voice_for_drum(BT_Player_Drum_t drum);
 static void bt_player_start_drum_voice(bt_drum_voice_t *voice, BT_Player_Drum_t drum, uint32_t sample_rate_hz);
 
+#if BT_PLAYER_OUTPUT_P4
+static void bt_player_publish_meta(void)
+{
+    bt_meta_uart_publish(bt_connected, audio_started, current_sample_rate_hz, s_track_title, s_track_artist);
+}
+#endif
+
 static uint8_t bt_player_alloc_tl(void)
 {
     s_avrc_tl = (s_avrc_tl + 1) % (ESP_AVRC_TRANS_LABEL_MAX + 1);
@@ -123,6 +131,9 @@ static void bt_player_clear_metadata(void)
     s_metadata_valid = false;
     s_track_title[0] = '\0';
     s_track_artist[0] = '\0';
+#if BT_PLAYER_OUTPUT_P4
+    bt_player_publish_meta();
+#endif
 }
 
 static void bt_player_set_metadata(uint8_t attr_id, const char *text)
@@ -142,6 +153,9 @@ static void bt_player_set_metadata(uint8_t attr_id, const char *text)
         s_metadata_valid = true;
         ESP_LOGI(TAG_BT_PLAYER, "Track artist: %s", s_track_artist);
     }
+#if BT_PLAYER_OUTPUT_P4
+    bt_player_publish_meta();
+#endif
 }
 
 static void bt_player_request_metadata(void)
@@ -405,16 +419,20 @@ static void bt_player_audio_task(void *arg)
 
             if (data != NULL && item_size >= 4) {
                 uint32_t frame_count = (uint32_t)(item_size / 4);
+                const void *write_ptr = data;
+
+#if !BT_PLAYER_OUTPUT_P4
                 memcpy(s_output_buf, data, frame_count * 4);
                 bt_player_mix_drums(s_output_buf, frame_count);
-
+                write_ptr = s_output_buf;
                 gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 1);
+#endif
                 amp_enabled = true;
 
                 size_t bytes_written = 0;
                 esp_err_t ret = i2s_channel_write(
                     i2s_tx_chan,
-                    s_output_buf,
+                    write_ptr,
                     frame_count * 4,
                     &bytes_written,
                     portMAX_DELAY);
@@ -433,6 +451,7 @@ static void bt_player_audio_task(void *arg)
             continue;
         }
 
+#if !BT_PLAYER_OUTPUT_P4
         if (bt_player_any_drum_active()) {
             uint32_t frame_count = BT_PLAYER_OUTPUT_FRAME_COUNT;
             memset(s_output_buf, 0, frame_count * 4);
@@ -452,6 +471,7 @@ static void bt_player_audio_task(void *arg)
         }
 
         gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 0);
+#endif
         amp_enabled = false;
     }
 }
@@ -471,14 +491,30 @@ static void bt_player_event_task(void *arg)
 esp_err_t BT_Player_Init(void)
 {
     ESP_LOGI(TAG_BT_PLAYER, "Starting A2DP sink: device=%s", BT_PLAYER_DEVICE_NAME);
-    ESP_LOGI(TAG_BT_PLAYER, "MAX98357A pins: BCLK=%d LRC/WS=%d DIN=%d SD/EN=%d",
+#if BT_PLAYER_OUTPUT_P4
+    ESP_LOGI(TAG_BT_PLAYER,
+             "P4 bridge I2S Master TX: BCLK=GPIO%d WS=GPIO%d DOUT=GPIO%d -> P4 BCLK=GPIO%d WS=GPIO%d DIN=GPIO%d",
              BT_PLAYER_I2S_BCLK_GPIO,
              BT_PLAYER_I2S_LRC_GPIO,
-             BT_PLAYER_I2S_DIN_GPIO,
+             BT_PLAYER_I2S_DOUT_GPIO,
+             P4_I2S_RX_BCLK_GPIO,
+             P4_I2S_RX_WS_GPIO,
+             P4_I2S_RX_DIN_GPIO);
+#else
+    ESP_LOGI(TAG_BT_PLAYER, "MAX98357A pins: BCLK=%d LRC/WS=%d DOUT=%d SD/EN=%d",
+             BT_PLAYER_I2S_BCLK_GPIO,
+             BT_PLAYER_I2S_LRC_GPIO,
+             BT_PLAYER_I2S_DOUT_GPIO,
              BT_PLAYER_AMP_SD_GPIO);
+#endif
 
     ESP_RETURN_ON_ERROR(bt_player_bluetooth_init(), TAG_BT_PLAYER, "Bluetooth init failed");
     ESP_RETURN_ON_ERROR(bt_player_i2s_init(), TAG_BT_PLAYER, "I2S init failed");
+#if BT_PLAYER_OUTPUT_P4
+    ESP_RETURN_ON_ERROR(bt_meta_uart_init(), TAG_BT_PLAYER, "Meta UART init failed");
+    bt_player_publish_meta();
+    ESP_LOGI(TAG_BT_PLAYER, "Meta UART TX GPIO%d -> P4 GPIO27 RX", BT_META_UART_TX_GPIO);
+#endif
 
     ESP_LOGI(TAG_BT_PLAYER, "Ready. Pair phone with \"%s\" and play music.", BT_PLAYER_DEVICE_NAME);
     return ESP_OK;
@@ -512,6 +548,11 @@ void BT_Player_GetStatus(BT_Player_Status_t *status)
 
 void BT_Player_TriggerDrum(BT_Player_Drum_t drum)
 {
+#if BT_PLAYER_OUTPUT_P4
+    (void)drum;
+    ESP_LOGW(TAG_BT_PLAYER, "Drum triggers move to ESP32-P4 in bridge mode");
+    return;
+#endif
     if (drum >= BT_PLAYER_DRUM_CLOSED_HAT + 1) {
         return;
     }
@@ -547,6 +588,7 @@ void BT_Player_TriggerDrum(BT_Player_Drum_t drum)
 
 static esp_err_t bt_player_i2s_init(void)
 {
+#if !BT_PLAYER_OUTPUT_P4
     gpio_config_t amp_sd_config = {
         .pin_bit_mask = 1ULL << BT_PLAYER_AMP_SD_GPIO,
         .mode = GPIO_MODE_OUTPUT,
@@ -556,6 +598,7 @@ static esp_err_t bt_player_i2s_init(void)
     };
     ESP_RETURN_ON_ERROR(gpio_config(&amp_sd_config), TAG_BT_PLAYER, "amp gpio config failed");
     ESP_RETURN_ON_ERROR(gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 0), TAG_BT_PLAYER, "amp mute failed");
+#endif
 
     i2s_chan_config_t chan_cfg = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_0, I2S_ROLE_MASTER);
     chan_cfg.dma_desc_num = 8;
@@ -575,7 +618,7 @@ static esp_err_t bt_player_i2s_init(void)
             .mclk = I2S_GPIO_UNUSED,
             .bclk = BT_PLAYER_I2S_BCLK_GPIO,
             .ws = BT_PLAYER_I2S_LRC_GPIO,
-            .dout = BT_PLAYER_I2S_DIN_GPIO,
+            .dout = BT_PLAYER_I2S_DOUT_GPIO,
             .din = I2S_GPIO_UNUSED,
             .invert_flags = {
                 .mclk_inv = false,
@@ -693,11 +736,16 @@ static void bt_player_a2dp_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *para
     case ESP_A2D_CONNECTION_STATE_EVT:
         if (param->conn_stat.state == ESP_A2D_CONNECTION_STATE_CONNECTED) {
             bt_connected = true;
+#if BT_PLAYER_OUTPUT_P4
+            bt_player_publish_meta();
+#endif
         } else if (param->conn_stat.state == ESP_A2D_CONNECTION_STATE_DISCONNECTED) {
             bt_connected = false;
             audio_started = false;
             vRingbufferReset(audio_ringbuf);
+#if !BT_PLAYER_OUTPUT_P4
             gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 0);
+#endif
             amp_enabled = false;
             bt_player_clear_metadata();
         }
@@ -711,15 +759,27 @@ static void bt_player_a2dp_cb(esp_a2d_cb_event_t event, esp_a2d_cb_param_t *para
             audio_started = true;
             packet_count = 0;
             i2s_write_count = 0;
+#if !BT_PLAYER_OUTPUT_P4
             gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 1);
+#endif
             amp_enabled = true;
             xSemaphoreGive(audio_start_sem);
+#if BT_PLAYER_OUTPUT_P4
+            bt_player_publish_meta();
+#endif
         } else {
             audio_started = false;
+#if BT_PLAYER_OUTPUT_P4
+            bt_player_publish_meta();
+#endif
+#if !BT_PLAYER_OUTPUT_P4
             if (!bt_player_any_drum_active()) {
                 gpio_set_level(BT_PLAYER_AMP_SD_GPIO, 0);
                 amp_enabled = false;
             }
+#else
+            amp_enabled = false;
+#endif
         }
         queued_event.id = BT_PLAYER_EVT_AUDIO_STATE;
         should_queue = true;
